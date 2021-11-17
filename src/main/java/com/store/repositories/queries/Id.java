@@ -7,5 +7,5 @@ import java.lang.annotation.RetentionPolicy;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Id {
-    String value() default "";
+    int value() default 0;
 }

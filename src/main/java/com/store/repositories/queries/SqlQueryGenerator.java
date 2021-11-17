@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,8 +56,27 @@ public class SqlQueryGenerator implements QueryGenerator{
     }
 
     private String getIdValue(Object object, String columnName) {
-        var data= getAllColumns(object.getClass(), object);
+        var data= getIdColumnValue(object.getClass(), object);
         return data.get(columnName);
+    }
+
+    private Map<String, String> getIdColumnValue(Class<?> clazz, Object object){
+        Map<String, String> data = new HashMap<>();
+        for (Field declaredField : clazz.getDeclaredFields()) {
+            Column columnAnnotation = declaredField.getAnnotation(Column.class);
+            if (columnAnnotation != null) {
+                if (declaredField.getAnnotation(Id.class) != null) {
+                    String columnNameFromAnnotation = columnAnnotation.name();
+                    String columnName = columnNameFromAnnotation.isEmpty() ? declaredField.getName()
+                            : columnNameFromAnnotation;
+                    if (object != null) {
+                        String value = invokeGetter(object, declaredField.getName());
+                        data.put(columnName, value);
+                    }
+                }
+            }
+        }
+        return data;
     }
 
     private String getConditionForUpdate(Object object, Class<?> clazz, String idColumn) {
@@ -72,12 +92,15 @@ public class SqlQueryGenerator implements QueryGenerator{
         for (Field declaredField : clazz.getDeclaredFields()) {
             Column columnAnnotation = declaredField.getAnnotation(Column.class);
             if (columnAnnotation != null) {
+                if(declaredField.getAnnotation(Id.class) != null){
+                    continue;
+                }
                 String columnNameFromAnnotation = columnAnnotation.name();
                 String columnName = columnNameFromAnnotation.isEmpty() ? declaredField.getName()
                         : columnNameFromAnnotation;
                 if (object != null) {
                     String value = invokeGetter(object, declaredField.getName());
-                    if (declaredField.getType() == String.class) {
+                    if (declaredField.getType() == String.class || declaredField.getType() == Date.class){
                         value = "'" + value + "'";
                     }
                     data.put(columnName, value);
