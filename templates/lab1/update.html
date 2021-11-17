@@ -5,16 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-    <br>
-    <h2>Create new product:</h2>
-    <form action="/products/add" method="post">
+    <h2>Update new product:</h2>
+    <form action="/products/update" method="post">
+        <input type="number" name="id" placeholder="Enter productId">
         <input type="text" name="name" placeholder="Enter product name">
         <input type="number" name="price" placeholder="Enter price name">
         <input type="date" name="date" placeholder="Enter date">
         <input type="submit" value="Send">
     </form>
-
-
-    <br>
 </body>
 </html>
