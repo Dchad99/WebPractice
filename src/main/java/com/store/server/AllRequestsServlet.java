@@ -1,4 +1,4 @@
-package com.store.controllers;
+package com.store.server;
 
 import com.store.templater.PageGenerator;
 
