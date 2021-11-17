@@ -25,6 +25,7 @@ public class ProductController extends HttpServlet {
         String resp = new Gson().toJson(productList);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write(resp);
     }
 
@@ -35,6 +36,7 @@ public class ProductController extends HttpServlet {
         if (product.isPresent()) {
             Product deleteProduct = product.get();
             service.delete(deleteProduct);
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             response.getWriter().write("Product was deleted");
         } else {
             response.getWriter().write("Product with such id wasn't found");

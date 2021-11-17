@@ -35,6 +35,7 @@ public class AddProductController extends HttpServlet {
 
         String message = !status ? "Product wasn't added" : "Product was added";
         response.getWriter().write(message);
+        response.setStatus(HttpServletResponse.SC_CREATED);
         response.sendRedirect("/products");
     }
 

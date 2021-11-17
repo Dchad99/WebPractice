@@ -33,6 +33,7 @@ public class UpdateProductController extends HttpServlet {
             p.setPrice(Integer.parseInt(request.getParameter("price")));
             p.setDate(new Date());
             service.update(p);
+            response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
             response.sendRedirect("/products");
         } else {
             response.getWriter().write("Sorry, but story doesn't contain product with such ID: " + request.getParameter("id"));
