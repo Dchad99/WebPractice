@@ -60,28 +60,30 @@ public class ProductRepositoryImpl implements ProductRepository {
         try (var connection = connectionFactory.getConnection();
              var statement = connection.createStatement();
              var resultSet = statement.executeQuery(queryGenerator.findById(id, Product.class))) {
+
             while (resultSet.next()) {
                 product.setId(resultSet.getInt("id"));
                 product.setName(resultSet.getString("name"));
                 product.setPrice(resultSet.getInt("price"));
                 product.setDate(resultSet.getDate("date"));
             }
+
+            return Optional.of(product);
         } catch (SQLException e) {
             log.warn("Couldn't invoke 'findAll', query is incorrect: ", e);
         }
-        return Optional.of(product);
+        return Optional.empty();
     }
 
     @Override
     public boolean save(Product product) {
-        boolean status;
+        boolean status = false;
         try(var connection = connectionFactory.getConnection();
             var statement = connection.createStatement();){
             String query = queryGenerator.insert(product);
             statement.executeUpdate(query);
             status = true;
         } catch (SQLException e){
-            status = false;
             log.warn("Couldn't invoke 'save', query is incorrect: ", e);
         }
         return status;
@@ -89,13 +91,13 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public boolean update(Product product) {
-        boolean status;
+        boolean status = false;
         try(var connection = connectionFactory.getConnection();
             var statement = connection.createStatement();){
-            statement.executeUpdate(queryGenerator.update(product));
+            String query = queryGenerator.update(product);
+            statement.executeUpdate(query);
             status = true;
         } catch (SQLException e){
-            status = false;
             log.warn("Couldn't invoke 'update', query is incorrect: ", e);
         }
         return status;
