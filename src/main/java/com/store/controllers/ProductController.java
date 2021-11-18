@@ -37,7 +37,7 @@ public class ProductController extends HttpServlet {
             Product deleteProduct = product.get();
             service.delete(deleteProduct);
             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-            response.getWriter().write("Product was deleted");
+            response.sendRedirect("/products");
         } else {
             response.getWriter().write("Product with such id wasn't found");
         }

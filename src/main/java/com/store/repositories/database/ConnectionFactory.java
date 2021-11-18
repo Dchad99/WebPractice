@@ -1,5 +1,6 @@
 package com.store.repositories.database;
 
+import com.store.exceptions.ResourceNotFoundException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import java.sql.Connection;
@@ -8,6 +9,8 @@ import java.sql.SQLException;
 
 @Slf4j
 public class ConnectionFactory implements DataSources {
+
+    @SneakyThrows
     @Override
     public Connection getConnection() {
         try {
@@ -15,8 +18,8 @@ public class ConnectionFactory implements DataSources {
             log.info("Successfully connected to DB!");
             return connection;
         } catch (SQLException e) {
-            log.warn("Failed connection to db");
-            throw new RuntimeException("Failed connection to db", e);
+            log.warn("Failed connection to db", e);
+            throw new ResourceNotFoundException("Failed connection to db", e);
         }
     }
 

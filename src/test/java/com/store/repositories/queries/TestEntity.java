@@ -1,15 +1,12 @@
-package com.store.entities;
+package com.store.repositories.queries;
 
-import com.store.repositories.queries.Column;
-import com.store.repositories.queries.Entity;
-import com.store.repositories.queries.Id;
 import lombok.Data;
+
 import java.util.Date;
 
 @Data
-@Entity(table = "products")
-public class Product {
-
+@Entity(table="products")
+public class TestEntity {
     @Id
     @Column
     private int id;
@@ -23,10 +20,10 @@ public class Product {
     @Column
     private Date date;
 
-    public Product() {
+    public TestEntity() {
     }
 
-    public Product(int id, String name, int price, Date date) {
+    public TestEntity(int id, String name, int price, Date date) {
         this.id = id;
         this.name = name;
         this.price = price;
