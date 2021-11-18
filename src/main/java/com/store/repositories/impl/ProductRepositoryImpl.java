@@ -1,12 +1,14 @@
-package com.store.repositories;
+package com.store.repositories.impl;
 
 import com.store.entities.Product;
+import com.store.repositories.ProductRepository;
 import com.store.repositories.database.DataSources;
 import com.store.repositories.queries.QueryGenerator;
 import com.store.repositories.queries.SqlQueryGenerator;
 import lombok.extern.slf4j.Slf4j;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,10 +24,10 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public List<Product> getAll() {
-        List<Product> products = new ArrayList<>();
         try (var connection = connectionFactory.getConnection();
              var statement = connection.createStatement();
              var resultSet = statement.executeQuery(queryGenerator.findAll(Product.class))) {
+            List<Product> products = new ArrayList<>();
             while (resultSet.next()) {
                 Product product = new Product();
                 product.setId(resultSet.getInt("id"));
@@ -34,10 +36,11 @@ public class ProductRepositoryImpl implements ProductRepository {
                 product.setDate(resultSet.getDate("date"));
                 products.add(product);
             }
+            return products;
         } catch (SQLException e) {
             log.warn("Couldn't invoke 'findAll', query is incorrect: ", e);
         }
-        return products;
+        return Collections.emptyList();
     }
 
     @Override

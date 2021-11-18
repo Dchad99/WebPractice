@@ -1,4 +1,4 @@
-package com.store.repositories;
+package com.store.repositories.jdbc;
 
 import java.util.List;
 import java.util.Optional;

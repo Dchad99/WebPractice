@@ -4,7 +4,7 @@ import com.store.controllers.AddProductController;
 import com.store.controllers.ProductController;
 import com.store.controllers.UpdateProductController;
 import com.store.repositories.ProductRepository;
-import com.store.repositories.ProductRepositoryImpl;
+import com.store.repositories.impl.ProductRepositoryImpl;
 import com.store.repositories.database.ConnectionFactory;
 import com.store.repositories.database.DataSources;
 import com.store.server.AllRequestsServlet;

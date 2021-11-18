@@ -2,7 +2,6 @@ package com.store.repositories.queries;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SqlQueryGeneratorTest {
@@ -18,7 +17,7 @@ class SqlQueryGeneratorTest {
     @Test
     void findById() {
         SqlQueryGenerator sqlQueryGenerator = new SqlQueryGenerator();
-        TestEntity testEntity = new TestEntity(1, "david", 1, new Date());
+        TestEntity testEntity = new TestEntity(1, "david", 1);
         String expected = "SELECT * FROM products WHERE id=1;";
         String actual = sqlQueryGenerator.findById(testEntity.getId(), TestEntity.class);
 
@@ -28,9 +27,9 @@ class SqlQueryGeneratorTest {
     @Test
     void insert() {
         SqlQueryGenerator sqlQueryGenerator = new SqlQueryGenerator();
-        String expected = "INSERT INTO products (date, price, name) VALUES ('Thu Nov 18 01:03:14 EET 2021', 1, 'David');";
+        String expected = "INSERT INTO products (price, name) VALUES (1, 'David');";
 
-        TestEntity testEntity = new TestEntity(1, "David", 1, new Date());
+        TestEntity testEntity = new TestEntity(1, "David", 1);
         String actual = sqlQueryGenerator.insert(testEntity);
         System.out.println("Actual => " + actual);
 
@@ -42,7 +41,7 @@ class SqlQueryGeneratorTest {
         SqlQueryGenerator sqlQueryGenerator = new SqlQueryGenerator();
         String expected = "DELETE FROM products WHERE id=1;";
 
-        TestEntity person = new TestEntity(1, "David",12000, new Date());
+        TestEntity person = new TestEntity(1, "David",12000);
         String actual = sqlQueryGenerator.remove(person.getId(), TestEntity.class);
 
         assertEquals(expected, actual);
@@ -52,9 +51,9 @@ class SqlQueryGeneratorTest {
     @Test
     void update(){
         SqlQueryGenerator sqlQueryGenerator = new SqlQueryGenerator();
-        String expected = "UPDATE products SET name='David', price=1, date='' WHERE id=1;";
+        String expected = "UPDATE products SET price=1, name='David' WHERE id=1;";
 
-        TestEntity updated = new TestEntity(1, "David", 1, new Date());
+        TestEntity updated = new TestEntity(1, "David", 1);
         String actual = sqlQueryGenerator.update(updated);
         System.out.println(actual);
         System.out.println(expected);

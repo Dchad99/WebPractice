@@ -7,6 +7,7 @@ import java.util.Date;
 @Data
 @Entity(table="products")
 public class TestEntity {
+
     @Id
     @Column
     private int id;
@@ -17,16 +18,11 @@ public class TestEntity {
     @Column
     private int price;
 
-    @Column
-    private Date date;
 
-    public TestEntity() {
-    }
-
-    public TestEntity(int id, String name, int price, Date date) {
+    public TestEntity(int id, String name, int price) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.date = date;
     }
+
 }

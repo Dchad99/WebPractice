@@ -1,6 +1,7 @@
 package com.store.repositories;
 
 import com.store.entities.Product;
+import com.store.repositories.impl.ProductRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.Date;
