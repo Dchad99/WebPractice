@@ -39,6 +39,4 @@ public class AddProductController extends HttpServlet {
         response.sendRedirect("/products");
     }
 
-
-
 }
