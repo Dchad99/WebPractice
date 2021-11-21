@@ -2,7 +2,6 @@ package com.store.controllers;
 
 import com.store.entities.Product;
 import com.store.services.ProductService;
-import com.store.templater.PageGenerator;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
