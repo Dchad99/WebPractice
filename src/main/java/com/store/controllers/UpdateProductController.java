@@ -19,7 +19,10 @@ public class UpdateProductController extends HttpServlet {
 
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
-        response.getWriter().println(PageGenerator.instance().getPage("update.html", null));
+        response.getOutputStream().write(this.getClass()
+                .getClassLoader()
+                .getResourceAsStream("templates/update.html")
+                .readAllBytes());
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
     }

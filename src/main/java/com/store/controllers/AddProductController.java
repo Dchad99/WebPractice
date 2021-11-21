@@ -2,7 +2,6 @@ package com.store.controllers;
 
 import com.store.entities.Product;
 import com.store.services.ProductService;
-import com.store.templater.PageGenerator;
 import lombok.SneakyThrows;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +16,11 @@ public class AddProductController extends HttpServlet {
         this.service = service;
     }
 
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws IOException {
-        response.getWriter().println(PageGenerator.instance().getPage("addProduct.html", null));
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.getOutputStream().write(this.getClass()
+                        .getClassLoader()
+                        .getResourceAsStream("templates/addProduct.html")
+                        .readAllBytes());
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
     }
