@@ -6,6 +6,7 @@ import com.store.repositories.db_config.database.DataSources;
 import com.store.repositories.db_config.queries.QueryGenerator;
 import com.store.repositories.db_config.queries.SqlQueryGenerator;
 import lombok.extern.slf4j.Slf4j;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,9 +34,9 @@ public class ProductRepositoryImpl implements ProductRepository {
                 Product product = new Product();
                 product.setId(resultSet.getInt("id"));
                 product.setName(resultSet.getString("name"));
-                product.setPrice(resultSet.getInt("price"));
                 product.setDate(resultSet.getDate("date"));
-                product.setName(resultSet.getString("product_description"));
+                product.setPrice(resultSet.getInt("price"));
+                product.setDescription(resultSet.getString("description"));
                 products.add(product);
             }
             return products;
@@ -63,14 +64,14 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Optional<Product> getById(int id) {
         try (var connection = connectionFactory.getConnection();
              var statement = connection.createStatement();
-             var resultSet = statement.executeQuery(queryGenerator.findByParameter(id, Product.class))) {
+             var resultSet = statement.executeQuery(queryGenerator.findById(id, Product.class))) {
             Product product = new Product();
             while (resultSet.next()) {
                 product.setId(resultSet.getInt("id"));
                 product.setName(resultSet.getString("name"));
-                product.setPrice(resultSet.getInt("price"));
                 product.setDate(resultSet.getDate("date"));
-                product.setName(resultSet.getString("product_description"));
+                product.setPrice(resultSet.getInt("price"));
+                product.setDescription(resultSet.getString("description"));
             }
             return Optional.of(product);
         } catch (SQLException e) {
@@ -111,7 +112,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         try (var connection = connectionFactory.getConnection();
              var statement = connection.createStatement();
              var resultSet = statement.executeQuery(String.format(FIND_BY_PRODUCT_NAME_OR_DESCRIPTION,
-                     "'%"+productName+"%'", "'%"+productDescription+"%'"))) {
+                     "'%" + productName + "%'", "'%" + productDescription + "%'"))) {
             List<Product> products = new ArrayList<>();
             while (resultSet.next()) {
                 Product product = new Product();
@@ -119,7 +120,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                 product.setName(resultSet.getString("name"));
                 product.setPrice(resultSet.getInt("price"));
                 product.setDate(resultSet.getDate("date"));
-                product.setName(resultSet.getString("product_description"));
+                product.setName(resultSet.getString("description"));
                 products.add(product);
             }
             return products;
