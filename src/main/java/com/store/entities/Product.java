@@ -18,13 +18,13 @@ public class Product {
     private String name;
 
     @Column
-    private int price;
-
-    @Column
     private Date date;
 
+    @Column(name = "description")
+    private String description;
+
     @Column
-    private String product_description;
+    private int price;
 
     public Product() {
     }
