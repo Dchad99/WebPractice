@@ -1,4 +1,4 @@
-package com.store.repositories.queries;
+package com.store.repositories.db_config.queries;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
