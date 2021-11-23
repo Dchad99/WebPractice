@@ -1,2 +1,2 @@
 ALTER TABLE products
-    ADD COLUMN product_description VARCHAR(250);
+    ADD COLUMN description VARCHAR(250);

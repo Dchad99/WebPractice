@@ -1,1 +1,1 @@
-ALTER TABLE products DROP COLUMN product_description;
+ALTER TABLE products DROP COLUMN description;
