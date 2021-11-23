@@ -1,14 +1,16 @@
 package com.store;
 
-import com.store.controllers.AddProductController;
-import com.store.controllers.ProductController;
-import com.store.controllers.UpdateProductController;
+import com.store.controllers.*;
 import com.store.repositories.ProductRepository;
+import com.store.repositories.UserRepository;
 import com.store.repositories.impl.ProductRepositoryImpl;
-import com.store.repositories.database.ConnectionFactory;
-import com.store.repositories.database.DataSources; 
+import com.store.repositories.db_config.database.ConnectionFactory;
+import com.store.repositories.db_config.database.DataSources;
+import com.store.repositories.impl.UserRepositoryImpl;
 import com.store.services.ProductService;
-import com.store.services.ProductServiceImpl;
+import com.store.services.UserService;
+import com.store.services.impl.ProductServiceImpl;
+import com.store.services.impl.UserServiceImpl;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -17,17 +19,30 @@ import org.eclipse.jetty.servlet.ServletHolder;
 public class Starter {
     public static void main(String[] args) throws Exception {
         DataSources dataSources = new ConnectionFactory();
+
+        //product handler
         ProductRepository repository = new ProductRepositoryImpl(dataSources);
         ProductService service = new ProductServiceImpl(repository);
 
-        ProductController controller = new ProductController(service);
-        AddProductController addProductController = new AddProductController(service);
-        UpdateProductController updateProductController = new UpdateProductController(service);
+        //user handler
+        UserRepository userRepository = new UserRepositoryImpl(dataSources);
+        UserService userService = new UserServiceImpl(userRepository);
+
+        //init servlets
+        ProductServlet controller = new ProductServlet(service);
+        AddProductServlet addProductServlet = new AddProductServlet(service);
+        UpdateProductServlet updateProductServlet = new UpdateProductServlet(service);
+        RegisterServlet registerServlet = new RegisterServlet(userService);
+        LoginServlet loginServlet = new LoginServlet(userService);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(controller), "/products");
-        context.addServlet(new ServletHolder(addProductController), "/products/add");
-        context.addServlet(new ServletHolder(updateProductController), "/products/update");
+        context.addServlet(new ServletHolder(controller), "/");
+        context.addServlet(new ServletHolder(addProductServlet), "/products/add");
+        context.addServlet(new ServletHolder(updateProductServlet), "/products/update");
+        context.addServlet(new ServletHolder(registerServlet), "/register");
+        context.addServlet(new ServletHolder(loginServlet), "/login");
+        context.addServlet(new ServletHolder(new LogoutServlet()), "/logout");
 
         Server server = new Server(8080);
         server.setHandler(context);
