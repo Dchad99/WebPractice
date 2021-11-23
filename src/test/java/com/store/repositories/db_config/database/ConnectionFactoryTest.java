@@ -1,8 +1,7 @@
-package com.store.repositories.database;
+package com.store.repositories.db_config.database;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.mockito.stubbing.Answer;
 
 import java.sql.Connection;
 import java.sql.Statement;

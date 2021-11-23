@@ -3,6 +3,7 @@ package com.store.services;
 import com.store.entities.Product;
 import com.store.repositories.ProductRepository;
 import com.store.repositories.impl.ProductRepositoryImpl;
+import com.store.services.impl.ProductServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

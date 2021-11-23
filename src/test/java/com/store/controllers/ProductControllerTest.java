@@ -1,8 +1,7 @@
 package com.store.controllers;
 
-import com.store.Starter;
 import com.store.services.ProductService;
-import com.store.services.ProductServiceImpl;
+import com.store.services.impl.ProductServiceImpl;
 import lombok.SneakyThrows;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -38,7 +37,7 @@ class ProductControllerTest {
     @SneakyThrows
     @Test
     void testGetPage(){
-        ProductController controller = new ProductController(service);
+        ProductServlet controller = new ProductServlet(service);
 
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
@@ -63,7 +62,7 @@ class ProductControllerTest {
 
         when(response.getWriter()).thenReturn(pw);
 
-        ProductController controller = new ProductController(service);
+        ProductServlet controller = new ProductServlet(service);
         servletContextHandler.addServlet(new ServletHolder(controller), "/products");
         controller.doDelete(request, response);
 

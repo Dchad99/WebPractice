@@ -1,8 +1,6 @@
-package com.store.repositories.queries;
+package com.store.repositories.db_config.queries;
 
 import lombok.Data;
-
-import java.util.Date;
 
 @Data
 @Entity(table="products")
