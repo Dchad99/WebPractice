@@ -38,7 +38,6 @@ public class UpdateProductServlet extends HttpServlet {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.sendRedirect("/login");
         }
     }

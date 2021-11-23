@@ -37,7 +37,6 @@ public class AddProductServlet extends HttpServlet {
                     .getResourceAsStream("templates/addProduct.html")
                     .readAllBytes());
         } else {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.sendRedirect("/login");
         }
     }
@@ -51,11 +50,7 @@ public class AddProductServlet extends HttpServlet {
         product.setDate(new Date());
 
         boolean status = service.save(product);
-
-        String message = !status ? "Product wasn't added" : "Product was added";
-        response.setStatus(HttpServletResponse.SC_CREATED);
         response.sendRedirect("/products");
-        response.getWriter().write(message);
     }
 
 }

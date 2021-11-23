@@ -39,7 +39,6 @@ public class ProductServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().write(resp);
         } else {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.sendRedirect("/login");
         }
     }
