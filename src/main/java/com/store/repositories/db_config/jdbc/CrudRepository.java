@@ -1,4 +1,4 @@
-package com.store.repositories.jdbc;
+package com.store.repositories.db_config.jdbc;
 
 import java.util.List;
 import java.util.Optional;

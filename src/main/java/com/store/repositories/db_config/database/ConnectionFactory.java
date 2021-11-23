@@ -1,4 +1,4 @@
-package com.store.repositories.database;
+package com.store.repositories.db_config.database;
 
 import com.store.exceptions.ResourceNotFoundException;
 import lombok.SneakyThrows;
