@@ -1,8 +1,7 @@
-package com.store.controllers;
+package com.store.web.servlets;
 
 import com.store.entities.Product;
 import com.store.services.ProductService;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,27 +17,13 @@ public class UpdateProductServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        boolean isAuth = false;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : request.getCookies()) {
-                if (cookie.getName().equalsIgnoreCase("user-token")) {
-                    isAuth = true;
-                }
-            }
-        }
-
-        if (isAuth) {
-            response.getOutputStream().write(this.getClass()
-                    .getClassLoader()
-                    .getResourceAsStream("templates/update.html")
-                    .readAllBytes());
-            response.setContentType("text/html;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_OK);
-        } else {
-            response.sendRedirect("/login");
-        }
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.getOutputStream().write(this.getClass()
+                .getClassLoader()
+                .getResourceAsStream("templates/update.html")
+                .readAllBytes());
+        response.setContentType("text/html;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override

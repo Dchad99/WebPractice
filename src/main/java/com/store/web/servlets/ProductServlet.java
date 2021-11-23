@@ -1,10 +1,9 @@
-package com.store.controllers;
+package com.store.web.servlets;
 
 import com.google.gson.Gson;
 import com.store.entities.Product;
 import com.store.services.ProductService;
 import lombok.SneakyThrows;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,32 +19,18 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     @SneakyThrows
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        boolean isAuth = false;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : request.getCookies()) {
-                if (cookie.getName().equalsIgnoreCase("user-token")) {
-                    isAuth = true;
-                }
-            }
-        }
-
-        if (isAuth) {
-            List<Product> productList = service.getAll();
-            String resp = new Gson().toJson(productList);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write(resp);
-        } else {
-            response.sendRedirect("/login");
-        }
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+        List<Product> productList = service.getAll();
+        String resp = new Gson().toJson(productList);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().write(resp);
     }
 
     @Override
     @SneakyThrows
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
+    public void doDelete(HttpServletRequest request, HttpServletResponse response) {
         int productId = Integer.parseInt(request.getParameter("productId"));
         Optional<Product> product = service.getById(productId);
         if (product.isPresent()) {

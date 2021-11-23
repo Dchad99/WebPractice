@@ -1,4 +1,4 @@
-package com.store.controllers;
+package com.store.web.servlets;
 
 import com.store.entities.Product;
 import com.store.services.ProductService;
@@ -18,32 +18,18 @@ public class AddProductServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        boolean isAuth = false;
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null){
-            for (Cookie cookie : request.getCookies()) {
-                if(cookie.getName().equalsIgnoreCase("user-token")){
-                    isAuth = true;
-                }
-            }
-        }
-
-        if(isAuth) {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_OK);
             response.getOutputStream().write(this.getClass()
                     .getClassLoader()
                     .getResourceAsStream("templates/addProduct.html")
                     .readAllBytes());
-        } else {
-            response.sendRedirect("/login");
-        }
     }
 
     @Override
     @SneakyThrows
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
         Product product = new Product();
         product.setName(request.getParameter("name"));
         product.setPrice(Integer.parseInt(request.getParameter("price")));
