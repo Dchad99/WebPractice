@@ -48,8 +48,9 @@ public class AddProductServlet extends HttpServlet {
         product.setName(request.getParameter("name"));
         product.setPrice(Integer.parseInt(request.getParameter("price")));
         product.setDate(new Date());
+        product.setDescription(request.getParameter("desc"));
 
-        boolean status = service.save(product);
+        service.save(product);
         response.sendRedirect("/products");
     }
 
