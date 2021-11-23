@@ -20,15 +20,15 @@ public class Starter {
     public static void main(String[] args) throws Exception {
         DataSources dataSources = new ConnectionFactory();
 
-        //product handler
+        //init repository layer
         ProductRepository repository = new ProductRepositoryImpl(dataSources);
-        ProductService service = new ProductServiceImpl(repository);
-
-        //user handler
         UserRepository userRepository = new UserRepositoryImpl(dataSources);
+
+        //init service layer
+        ProductService service = new ProductServiceImpl(repository);
         UserService userService = new UserServiceImpl(userRepository);
 
-        //init servlets
+        //init presentation layer
         ProductServlet controller = new ProductServlet(service);
         AddProductServlet addProductServlet = new AddProductServlet(service);
         UpdateProductServlet updateProductServlet = new UpdateProductServlet(service);
