@@ -18,19 +18,18 @@ public class UpdateProductServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         boolean isAuth = false;
         Cookie[] cookies = request.getCookies();
-        if(cookies != null){
+        if (cookies != null) {
             for (Cookie cookie : request.getCookies()) {
-                if(cookie.getName().equalsIgnoreCase("user-token")){
+                if (cookie.getName().equalsIgnoreCase("user-token")) {
                     isAuth = true;
                 }
             }
         }
 
-        if(isAuth) {
+        if (isAuth) {
             response.getOutputStream().write(this.getClass()
                     .getClassLoader()
                     .getResourceAsStream("templates/update.html")
@@ -46,7 +45,7 @@ public class UpdateProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Optional<Product> productToUpdate = service.getById(id);
-        if(productToUpdate.isPresent()){
+        if (productToUpdate.isPresent()) {
             Product p = productToUpdate.get();
             p.setName(request.getParameter("name"));
             p.setPrice(Integer.parseInt(request.getParameter("price")));

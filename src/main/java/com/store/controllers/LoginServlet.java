@@ -46,6 +46,7 @@ public class LoginServlet extends HttpServlet {
             final String encoded_password = securityService.encryptData(password + fromDb.getUserHash());
             if (Objects.equals(encoded_password, fromDb.getPassword())) {
                 Cookie cookie = new Cookie("user-token", fromDb.getUserHash());
+                cookie.setMaxAge(-1);
                 response.addCookie(cookie);
                 response.sendRedirect("/products");
             }

@@ -1,6 +1,5 @@
 package com.store.repositories.db_config.database;
 
-import com.store.exceptions.ResourceNotFoundException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import java.sql.Connection;
@@ -18,8 +17,8 @@ public class ConnectionFactory implements DataSources {
             log.info("Successfully connected to DB!");
             return connection;
         } catch (SQLException e) {
-            log.warn("Failed connection to db", e);
-            throw new ResourceNotFoundException("Failed connection to db", e);
+            log.warn("Connection to database was failed.", e);
+            throw new RuntimeException("Connection to database was failed.", e);
         }
     }
 
