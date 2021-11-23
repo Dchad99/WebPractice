@@ -1,7 +1,9 @@
 package com.store.controllers;
 
 import com.store.entities.User;
+import com.store.services.SecurityService;
 import com.store.services.UserService;
+import com.store.services.impl.SecurityServiceImpl;
 import com.store.services.impl.UserServiceImpl;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -9,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,6 +23,7 @@ import static org.mockito.Mockito.when;
 
 class LoginServletTest {
     private final UserService service = mock(UserServiceImpl.class);
+    private final SecurityService securityService = mock(SecurityServiceImpl.class);
     private final ServletContextHandler servletContextHandler = mock(ServletContextHandler.class);
 
     @Mock
@@ -32,11 +37,10 @@ class LoginServletTest {
         MockitoAnnotations.initMocks(this);
     }
 
-
     @Test
-    void testLogin() throws IOException {
+    void testLogin() throws IOException, ServletException {
         User user = new User(1, "David", "qwer1234", "qwer");
-        LoginServlet loginServlet = new LoginServlet(service);
+        LoginServlet loginServlet = new LoginServlet(service, securityService);
 
         when(request.getParameter("username")).thenReturn(user.getUsername());
         when(request.getParameter("password")).thenReturn(user.getPassword());
@@ -52,9 +56,9 @@ class LoginServletTest {
     }
 
     @Test
-    void testWhenUserIsNotAuthorized() throws IOException {
+    void testWhenUserIsNotAuthorized() throws IOException, ServletException {
         User user = new User(1, "", "", "qwer");
-        LoginServlet loginServlet = new LoginServlet(service);
+        LoginServlet loginServlet = new LoginServlet(service, securityService);
 
         when(request.getParameter("username")).thenReturn(user.getUsername());
         when(request.getParameter("password")).thenReturn(user.getPassword());
