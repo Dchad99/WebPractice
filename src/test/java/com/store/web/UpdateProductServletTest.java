@@ -1,7 +1,8 @@
-package com.store.controllers;
+package com.store.web;
 
 import com.store.services.ProductService;
 import com.store.services.impl.ProductServiceImpl;
+import com.store.web.servlets.UpdateProductServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.junit.jupiter.api.BeforeEach;

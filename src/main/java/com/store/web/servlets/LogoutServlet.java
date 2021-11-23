@@ -1,4 +1,4 @@
-package com.store.controllers;
+package com.store.web.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;

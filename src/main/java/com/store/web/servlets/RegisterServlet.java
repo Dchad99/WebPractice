@@ -1,4 +1,4 @@
-package com.store.controllers;
+package com.store.web.servlets;
 
 import com.store.entities.User;
 import com.store.services.SecurityService;
