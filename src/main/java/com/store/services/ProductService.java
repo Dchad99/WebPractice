@@ -15,4 +15,6 @@ public interface ProductService{
     boolean save(Product object);
 
     boolean update(Product object);
+
+    List<Product> findByNameAndDescription(String productName, String productDescription);
 }

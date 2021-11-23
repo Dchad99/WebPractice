@@ -1,8 +1,8 @@
 package com.store.entities;
 
-import com.store.repositories.queries.Column;
-import com.store.repositories.queries.Entity;
-import com.store.repositories.queries.Id;
+import com.store.repositories.db_config.queries.Column;
+import com.store.repositories.db_config.queries.Entity;
+import com.store.repositories.db_config.queries.Id;
 import lombok.Data;
 import java.util.Date;
 
@@ -22,6 +22,9 @@ public class Product {
 
     @Column
     private Date date;
+
+    @Column
+    private String product_description;
 
     public Product() {
     }

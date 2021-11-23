@@ -1,11 +1,11 @@
-package com.store.repositories.queries;
+package com.store.repositories.db_config.queries;
 
 import java.util.function.Supplier;
 
 public enum QueryTemplates  implements Supplier<String> {
     INSERT("INSERT INTO %s (%s) VALUES (%s);"),
     SELECT_ALL("SELECT * FROM %s;"),
-    SELECT_BY_ID("SELECT * FROM %s WHERE %s=%s;"),
+    SELECT_BY_PARAMETER("SELECT * FROM %s WHERE %s=%s;"),
     DELETE_BY_ID ("DELETE FROM %s WHERE %s=%s;"),
     UPDATE_BY_ID("UPDATE %s SET %s WHERE %s=%s;");
 

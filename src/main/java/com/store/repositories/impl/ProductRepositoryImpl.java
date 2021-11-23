@@ -2,9 +2,9 @@ package com.store.repositories.impl;
 
 import com.store.entities.Product;
 import com.store.repositories.ProductRepository;
-import com.store.repositories.database.DataSources;
-import com.store.repositories.queries.QueryGenerator;
-import com.store.repositories.queries.SqlQueryGenerator;
+import com.store.repositories.db_config.database.DataSources;
+import com.store.repositories.db_config.queries.QueryGenerator;
+import com.store.repositories.db_config.queries.SqlQueryGenerator;
 import lombok.extern.slf4j.Slf4j;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,8 +14,9 @@ import java.util.Optional;
 
 @Slf4j
 public class ProductRepositoryImpl implements ProductRepository {
+    private final String FIND_BY_PRODUCT_NAME_OR_DESCRIPTION = "SELECT * FROM products WHERE name LIKE ? or product_description LIKE ?;";
     private final DataSources connectionFactory;
-    private QueryGenerator queryGenerator;
+    private final QueryGenerator queryGenerator;
 
     public ProductRepositoryImpl(DataSources connectionFactory) {
         this.connectionFactory = connectionFactory;
@@ -34,6 +35,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                 product.setName(resultSet.getString("name"));
                 product.setPrice(resultSet.getInt("price"));
                 product.setDate(resultSet.getDate("date"));
+                product.setName(resultSet.getString("product_description"));
                 products.add(product);
             }
             return products;
@@ -46,11 +48,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public boolean delete(Product product) {
         boolean status;
-        try(var connection = connectionFactory.getConnection();
-            var statement = connection.createStatement();){
+        try (var connection = connectionFactory.getConnection();
+             var statement = connection.createStatement();) {
             statement.executeUpdate(queryGenerator.remove(product.getId(), Product.class));
             status = true;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             status = false;
             log.warn("Couldn't invoke 'delete', query is incorrect: ", e);
         }
@@ -59,18 +61,17 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public Optional<Product> getById(int id) {
-        Product product = new Product();
         try (var connection = connectionFactory.getConnection();
              var statement = connection.createStatement();
-             var resultSet = statement.executeQuery(queryGenerator.findById(id, Product.class))) {
-
+             var resultSet = statement.executeQuery(queryGenerator.findByParameter(id, Product.class))) {
+            Product product = new Product();
             while (resultSet.next()) {
                 product.setId(resultSet.getInt("id"));
                 product.setName(resultSet.getString("name"));
                 product.setPrice(resultSet.getInt("price"));
                 product.setDate(resultSet.getDate("date"));
+                product.setName(resultSet.getString("product_description"));
             }
-
             return Optional.of(product);
         } catch (SQLException e) {
             log.warn("Couldn't invoke 'findAll', query is incorrect: ", e);
@@ -81,12 +82,12 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public boolean save(Product product) {
         boolean status = false;
-        try(var connection = connectionFactory.getConnection();
-            var statement = connection.createStatement();){
+        try (var connection = connectionFactory.getConnection();
+             var statement = connection.createStatement();) {
             String query = queryGenerator.insert(product);
             statement.executeUpdate(query);
             status = true;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             log.warn("Couldn't invoke 'save', query is incorrect: ", e);
         }
         return status;
@@ -95,14 +96,36 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public boolean update(Product product) {
         boolean status = false;
-        try(var connection = connectionFactory.getConnection();
-            var statement = connection.createStatement();){
+        try (var connection = connectionFactory.getConnection();
+             var statement = connection.createStatement();) {
             String query = queryGenerator.update(product);
             statement.executeUpdate(query);
             status = true;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             log.warn("Couldn't invoke 'update', query is incorrect: ", e);
         }
         return status;
+    }
+
+    public List<Product> findByNameAndDescription(String productName, String productDescription) {
+        try (var connection = connectionFactory.getConnection();
+             var statement = connection.createStatement();
+             var resultSet = statement.executeQuery(String.format(FIND_BY_PRODUCT_NAME_OR_DESCRIPTION,
+                     "'%"+productName+"%'", "'%"+productDescription+"%'"))) {
+            List<Product> products = new ArrayList<>();
+            while (resultSet.next()) {
+                Product product = new Product();
+                product.setId(resultSet.getInt("id"));
+                product.setName(resultSet.getString("name"));
+                product.setPrice(resultSet.getInt("price"));
+                product.setDate(resultSet.getDate("date"));
+                product.setName(resultSet.getString("product_description"));
+                products.add(product);
+            }
+            return products;
+        } catch (SQLException e) {
+            log.warn("Couldn't invoke 'findByNameAndDescription', query is incorrect: ", e);
+        }
+        return Collections.emptyList();
     }
 }

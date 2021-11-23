@@ -1,10 +1,12 @@
-package com.store.repositories.queries;
+package com.store.repositories.db_config.queries;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,7 +17,7 @@ import static java.lang.String.join;
 import static java.lang.String.valueOf;
 
 @Slf4j
-public class SqlQueryGenerator implements QueryGenerator{
+public class SqlQueryGenerator implements QueryGenerator {
 
     @Override
     public String findAll(Class<?> clazz) {
@@ -24,8 +26,15 @@ public class SqlQueryGenerator implements QueryGenerator{
 
     @Override
     public String findById(Object idValue, Class<?> clazz) {
-        return String.format(QueryTemplates.SELECT_BY_ID.get(), getTableName(clazz),
+        return String.format(QueryTemplates.SELECT_BY_PARAMETER.get(), getTableName(clazz),
                 getConditionWithEntityId(clazz), idValue);
+    }
+
+    @Override
+    public String findByParameter(Object object, Class<?> clazz) {
+        return String.format(QueryTemplates.SELECT_BY_PARAMETER.get(), getTableName(clazz),
+
+        "username", "'" + object + "'");
     }
 
     @Override
@@ -56,11 +65,11 @@ public class SqlQueryGenerator implements QueryGenerator{
     }
 
     private String getIdValue(Object object, String columnName) {
-        var data= getIdColumnValue(object.getClass(), object);
+        var data = getIdColumnValue(object.getClass(), object);
         return data.get(columnName);
     }
 
-    private Map<String, String> getIdColumnValue(Class<?> clazz, Object object){
+    private Map<String, String> getIdColumnValue(Class<?> clazz, Object object) {
         Map<String, String> data = new HashMap<>();
         for (Field declaredField : clazz.getDeclaredFields()) {
             Column columnAnnotation = declaredField.getAnnotation(Column.class);
@@ -92,7 +101,7 @@ public class SqlQueryGenerator implements QueryGenerator{
         for (Field declaredField : clazz.getDeclaredFields()) {
             Column columnAnnotation = declaredField.getAnnotation(Column.class);
             if (columnAnnotation != null) {
-                if(declaredField.getAnnotation(Id.class) != null){
+                if (declaredField.getAnnotation(Id.class) != null) {
                     continue;
                 }
                 String columnNameFromAnnotation = columnAnnotation.name();
@@ -100,7 +109,7 @@ public class SqlQueryGenerator implements QueryGenerator{
                         : columnNameFromAnnotation;
                 if (object != null) {
                     String value = invokeGetter(object, declaredField.getName());
-                    if (declaredField.getType() == String.class || declaredField.getType() == Date.class){
+                    if (declaredField.getType() == String.class || declaredField.getType() == Date.class) {
                         value = "'" + value + "'";
                     }
                     data.put(columnName, value);
@@ -112,11 +121,14 @@ public class SqlQueryGenerator implements QueryGenerator{
         return data;
     }
 
-
     private String getConditionWithEntityId(Class<?> clazz) {
         for (Field declaredField : clazz.getDeclaredFields()) {
             Id idColumn = declaredField.getAnnotation(Id.class);
             if (idColumn != null) {
+                Column columnName = declaredField.getAnnotation(Column.class);
+                return columnName.name().isEmpty() ? declaredField.getName() : columnName.name();
+            } else {
+                // find not by id
                 Column columnName = declaredField.getAnnotation(Column.class);
                 return columnName.name().isEmpty() ? declaredField.getName() : columnName.name();
             }
