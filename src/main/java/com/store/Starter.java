@@ -8,8 +8,10 @@ import com.store.repositories.db_config.database.ConnectionFactory;
 import com.store.repositories.db_config.database.DataSources;
 import com.store.repositories.impl.UserRepositoryImpl;
 import com.store.services.ProductService;
+import com.store.services.SecurityService;
 import com.store.services.UserService;
 import com.store.services.impl.ProductServiceImpl;
+import com.store.services.impl.SecurityServiceImpl;
 import com.store.services.impl.UserServiceImpl;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -25,6 +27,7 @@ public class Starter {
         UserRepository userRepository = new UserRepositoryImpl(dataSources);
 
         //init service layer
+        SecurityService securityService = new SecurityServiceImpl();
         ProductService service = new ProductServiceImpl(repository);
         UserService userService = new UserServiceImpl(userRepository);
 
@@ -32,8 +35,8 @@ public class Starter {
         ProductServlet controller = new ProductServlet(service);
         AddProductServlet addProductServlet = new AddProductServlet(service);
         UpdateProductServlet updateProductServlet = new UpdateProductServlet(service);
-        RegisterServlet registerServlet = new RegisterServlet(userService);
-        LoginServlet loginServlet = new LoginServlet(userService);
+        RegisterServlet registerServlet = new RegisterServlet(userService, securityService);
+        LoginServlet loginServlet = new LoginServlet(userService, securityService);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(controller), "/products");
