@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        final Optional<User> user = service.getRecordByParam(username);
+        final Optional<User> user = service.getByParam(username);
         if (user.isPresent()) {
             User fromDb = user.get();
             final String encoded_password = securityService.encryptData(password + fromDb.getUserHash());
