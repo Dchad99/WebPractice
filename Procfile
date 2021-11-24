@@ -1,1 +1,1 @@
-web: java -jar target/web-store-1.0.jar
+web: java -Dserver.port=$PORT -jar target/web-store-1.0.jar
