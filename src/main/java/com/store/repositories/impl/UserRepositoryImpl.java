@@ -96,7 +96,7 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean update(User user) {
         boolean status;
         try (var connection = connectionFactory.getConnection();
-             var statement = connection.createStatement();) {
+             var statement = connection.createStatement()) {
             String query = queryGenerator.update(user);
             statement.executeUpdate(query);
             status = true;
@@ -108,11 +108,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> getRecordByParam(String parameter) {
-        try (var connection = connectionFactory.getConnection();
-             var statement = connection.createStatement();
-             var resultSet = statement.executeQuery(queryGenerator.findByParameter(parameter, User.class))) {
-
+    public Optional<User> getByParam(String parameter) {
+        try (var c = connectionFactory.getConnection();
+             var statement = c.createStatement();
+             var resultSet = statement.executeQuery(
+                     queryGenerator.findByParameter(parameter, User.class))) {
 
             User user = new User();
             while (resultSet.next()) {
