@@ -29,10 +29,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(int id, String name, int price, Date date) {
+    public Product(int id, String name, int price, Date date, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.date = date;
+        this.description = description;
     }
 }
