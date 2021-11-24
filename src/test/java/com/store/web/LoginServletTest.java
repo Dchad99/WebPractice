@@ -1,9 +1,9 @@
 package com.store.web;
 
 import com.store.entities.User;
-import com.store.services.SecurityService;
+import com.store.security.SecurityService;
 import com.store.services.UserService;
-import com.store.services.impl.SecurityServiceImpl;
+import com.store.security.SecurityServiceImpl;
 import com.store.services.impl.UserServiceImpl;
 import com.store.web.servlets.LoginServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
