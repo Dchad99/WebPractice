@@ -1,4 +1,4 @@
-package com.store.services;
+package com.store.security;
 
 import java.util.UUID;
 
