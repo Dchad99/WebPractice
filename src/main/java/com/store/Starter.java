@@ -7,10 +7,10 @@ import com.store.repositories.db_config.database.ConnectionFactory;
 import com.store.repositories.db_config.database.DataSources;
 import com.store.repositories.impl.UserRepositoryImpl;
 import com.store.services.ProductService;
-import com.store.services.SecurityService;
+import com.store.security.SecurityService;
 import com.store.services.UserService;
 import com.store.services.impl.ProductServiceImpl;
-import com.store.services.impl.SecurityServiceImpl;
+import com.store.security.SecurityServiceImpl;
 import com.store.services.impl.UserServiceImpl;
 import com.store.web.filters.AuthSecurityFilter;
 import com.store.web.servlets.*;
@@ -43,12 +43,12 @@ public class Starter {
         RegisterServlet registerServlet = new RegisterServlet(userService, securityService);
         LoginServlet loginServlet = new LoginServlet(userService, securityService);
         LogoutServlet logoutServlet = new LogoutServlet();
+        ProductSearchServlet productSearchServlet = new ProductSearchServlet(service);
 
         //init filters
         AuthSecurityFilter authSecurityFilter = new AuthSecurityFilter();
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.setContextPath("/");
 
         context.addFilter(new FilterHolder(authSecurityFilter), "/products", EnumSet.of(DispatcherType.REQUEST));
         context.addServlet(new ServletHolder(controller), "/products");
@@ -56,6 +56,7 @@ public class Starter {
         context.addServlet(new ServletHolder(addProductServlet), "/products/add");
         context.addServlet(new ServletHolder(updateProductServlet), "/products/update");
         context.addServlet(new ServletHolder(registerServlet), "/register");
+        context.addServlet(new ServletHolder(productSearchServlet), "/products");
         context.addServlet(new ServletHolder(loginServlet), "/login");
         context.addServlet(new ServletHolder(logoutServlet), "/logout");
 
