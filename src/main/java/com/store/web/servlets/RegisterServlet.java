@@ -1,7 +1,7 @@
 package com.store.web.servlets;
 
 import com.store.entities.User;
-import com.store.services.SecurityService;
+import com.store.security.SecurityService;
 import com.store.services.UserService;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
