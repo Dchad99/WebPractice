@@ -19,7 +19,7 @@ class SqlQueryGeneratorTest {
         SqlQueryGenerator sqlQueryGenerator = new SqlQueryGenerator();
         TestEntity testEntity = new TestEntity(1, "david", 1);
         String expected = "SELECT * FROM products WHERE id=1;";
-        String actual = sqlQueryGenerator.findByParameter(testEntity.getId(), TestEntity.class);
+        String actual = sqlQueryGenerator.findById(testEntity.getId(), TestEntity.class);
 
         assertEquals(expected, actual);
     }

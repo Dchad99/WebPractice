@@ -57,7 +57,7 @@ class LoginServletTest {
     }
 
     @Test
-    void testWhenUserIsNotAuthorized() throws IOException, ServletException {
+    void testWhenUserIsNotAuthorized() throws IOException {
         User user = new User(1, "", "", "qwer");
         LoginServlet loginServlet = new LoginServlet(service, securityService);
 

@@ -35,23 +35,6 @@ class AddProductServletTest {
     }
 
     @Test
-    void testGetCreationPage() throws IOException {
-        AddProductServlet controller = new AddProductServlet(service);
-
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-
-        when(response.getWriter()).thenReturn(pw);
-
-        servletContextHandler.addServlet(new ServletHolder(controller), "/products/add");
-        controller.doGet(request, response);
-
-        when(response.getStatus()).thenReturn(HttpServletResponse.SC_OK);
-        when(response.getContentType()).thenReturn("text/html;charset=utf-8");
-    }
-
-
-    @Test
     void testAddProduct() throws IOException {
         AddProductServlet controller = new AddProductServlet(service);
 
