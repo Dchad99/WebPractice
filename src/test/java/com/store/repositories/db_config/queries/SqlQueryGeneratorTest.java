@@ -60,4 +60,8 @@ class SqlQueryGeneratorTest {
         assertEquals(expected, actual);
     }
 
+
+
+
+
 }

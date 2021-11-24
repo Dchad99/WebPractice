@@ -4,7 +4,11 @@ import com.store.entities.Product;
 import com.store.repositories.impl.ProductRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Collections;
 import java.util.Date;
+
 import static java.util.Optional.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -19,12 +23,12 @@ class ProductRepositoryImplTest {
     }
 
     @Test
-    void checkMethodGetAll(){
+    void checkMethodGetAll() {
         assertNotNull(repository.getAll());
     }
 
     @Test
-    void testDelete(){
+    void testDelete() {
         var absentId = 2222;
         var presentId = 1;
 
@@ -36,18 +40,28 @@ class ProductRepositoryImplTest {
     }
 
     @Test
-    void saveMethod(){
+    void saveMethod() {
         when(repository.save(product)).thenReturn(true);
         repository.save(product);
         verify(repository, times(1)).save(product);
     }
 
-
     @Test
-    void testUpdateProduct(){
+    void testUpdateProduct() {
         when(repository.update(product)).thenReturn(true);
         repository.update(product);
         verify(repository, times(1)).update(product);
+    }
+
+    @Test
+    void testFindProductByName() {
+        String searchItem = "e";
+
+        when(repository.findByNameAndDescription(searchItem)).thenReturn(Collections.emptyList());
+        List<Product> testList = repository.findByNameAndDescription(searchItem);
+        verify(repository, times(1)).findByNameAndDescription(searchItem);
+
+        assertNotNull(testList);
     }
 
 }

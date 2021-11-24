@@ -1,13 +1,9 @@
 package com.store.repositories.impl;
 
-import com.store.entities.Product;
 import com.store.entities.User;
 import com.store.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Date;
-
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,7 +43,6 @@ class UserRepositoryImplTest {
         repository.save(user);
         verify(repository, times(1)).save(user);
     }
-
 
     @Test
     void testUpdateProduct(){
