@@ -64,6 +64,12 @@ public class SqlQueryGenerator implements QueryGenerator {
                 queryParameters, conditionForUpdate, getIdValue(object, idColumnName));
     }
 
+    public String findByItem(Object object, String searchItem) {
+        String tableName = getTableName(object.getClass());
+        searchItem = "'%" + searchItem + "%'";
+        return String.format(QueryTemplates.FIND_BY_ITEM.get(), tableName, searchItem, searchItem);
+    }
+
     private String getIdValue(Object object, String columnName) {
         var data = getIdColumnValue(object.getClass(), object);
         return data.get(columnName);
