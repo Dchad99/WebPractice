@@ -15,5 +15,5 @@ public interface UserService {
 
     boolean update(User object);
 
-    Optional<User> getRecordByParam(String parameter);
+    Optional<User> getByParam(String parameter);
 }

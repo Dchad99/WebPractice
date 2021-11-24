@@ -40,8 +40,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getRecordByParam(String parameter) {
-        return Optional.of(repository.getRecordByParam(parameter)).orElseThrow(ResourceNotFoundException::new);
+    public Optional<User> getByParam(String parameter) {
+        return Optional.of(repository.getByParam(parameter)).orElseThrow(ResourceNotFoundException::new);
     }
 
 }
