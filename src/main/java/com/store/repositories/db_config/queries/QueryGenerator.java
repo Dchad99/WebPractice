@@ -13,4 +13,6 @@ public interface QueryGenerator {
 
     String update(Object object);
 
+    String findByItem(Object object, String searchItem);
+
 }

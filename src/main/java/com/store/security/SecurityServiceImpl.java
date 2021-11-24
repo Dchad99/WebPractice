@@ -1,6 +1,5 @@
-package com.store.services.impl;
+package com.store.security;
 
-import com.store.services.SecurityService;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class SecurityServiceImpl implements SecurityService {
