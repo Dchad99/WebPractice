@@ -3,7 +3,6 @@ package com.store.web.servlets;
 import com.store.entities.Product;
 import com.store.services.ProductService;
 import lombok.SneakyThrows;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

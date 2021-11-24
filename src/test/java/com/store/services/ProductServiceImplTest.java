@@ -21,7 +21,7 @@ class ProductServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        product = new Product(1, "David", 1, new Date());
+        product = new Product(1, "David", 1, new Date(), "");
     }
 
     @AfterEach

@@ -19,7 +19,7 @@ class ProductRepositoryImplTest {
 
     @BeforeEach
     void beforeAll() {
-        product = new Product(1, "David", 1, new Date());
+        product = new Product(1, "David", 1, new Date(), "");
     }
 
     @Test
@@ -32,7 +32,7 @@ class ProductRepositoryImplTest {
         var absentId = 2222;
         var presentId = 1;
 
-        var product = new Product(presentId, "David", 1, new Date());
+        var product = new Product(presentId, "David", 1, new Date(), "");
         when(repository.getById(absentId)).thenReturn(empty());
         when(repository.getById(presentId)).thenReturn(of(product));
 

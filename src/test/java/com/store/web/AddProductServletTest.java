@@ -38,7 +38,10 @@ class AddProductServletTest {
     void testAddProduct() throws IOException {
         AddProductServlet controller = new AddProductServlet(service);
 
-        Product product = new Product(1, "David", 1, new Date());
+        Product product = new Product();
+        product.setId(1);
+        product.setName("David");
+        product.setDate(new Date());
 
         when(request.getParameter("name")).thenReturn(product.getName());
         when(request.getParameter("price")).thenReturn(String.valueOf(product.getPrice()));
