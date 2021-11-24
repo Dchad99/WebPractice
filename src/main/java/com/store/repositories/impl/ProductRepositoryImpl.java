@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @Slf4j
 public class ProductRepositoryImpl implements ProductRepository {
-    private final String FIND_BY_PRODUCT_NAME_OR_DESCRIPTION = "SELECT * FROM products WHERE name LIKE ? or product_description LIKE ?;";
     private final DataSources connectionFactory;
     private final QueryGenerator queryGenerator;
 
@@ -108,11 +107,10 @@ public class ProductRepositoryImpl implements ProductRepository {
         return status;
     }
 
-    public List<Product> findByNameAndDescription(String productName, String productDescription) {
+    public List<Product> findByNameAndDescription(String searchItem) {
         try (var connection = connectionFactory.getConnection();
              var statement = connection.createStatement();
-             var resultSet = statement.executeQuery(String.format(FIND_BY_PRODUCT_NAME_OR_DESCRIPTION,
-                     "'%" + productName + "%'", "'%" + productDescription + "%'"))) {
+             var resultSet = statement.executeQuery(queryGenerator.findByItem(Product.class, searchItem))) {
             List<Product> products = new ArrayList<>();
             while (resultSet.next()) {
                 Product product = new Product();

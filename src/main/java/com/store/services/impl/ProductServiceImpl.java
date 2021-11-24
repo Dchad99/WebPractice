@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findByNameAndDescription(String productName, String productDescription) {
-        return repository.findByNameAndDescription(productName, productDescription);
+    public List<Product> findByNameAndDescription(String productName) {
+        return repository.findByNameAndDescription(productName);
     }
 }

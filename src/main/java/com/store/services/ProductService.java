@@ -16,5 +16,5 @@ public interface ProductService{
 
     boolean update(Product object);
 
-    List<Product> findByNameAndDescription(String productName, String productDescription);
+    List<Product> findByNameAndDescription(String productItem);
 }

@@ -5,5 +5,5 @@ import com.store.repositories.db_config.jdbc.CrudRepository;
 import java.util.List;
 
 public interface ProductRepository extends CrudRepository<Product> {
-    List<Product> findByNameAndDescription(String productName, String productDescription);
+    List<Product> findByNameAndDescription(String productName);
 }
