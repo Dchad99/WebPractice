@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebStore</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" href="css/register.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="align-header">
+    <div class="header">
+        <div class="left-side-header">
+            <div class="logo"><i class="fa fa-dropbox"></i><span>WebStore</span></div>
+        </div>
+        <div class="right-side-header">
+            <a href="#"><i class="fa fa-home"></i></a>
+        </div>
+    </div>
+</div>
+
+
+<div class="align-of-main-container">
+    <div class="main-content">
+        <div class="man-with-tablet">
+            <img src="img/right-man.png"/>
+        </div>
+        <div class="teoco-start-btn">
+            <p>welcome, friend</p>
+            <span>We're glad to see you here</span>
+            <button onclick="Start()">Start</button>
+        </div>
+        <div class="list-of-task">
+            <img src="img/list_of_orders.png"/>
+        </div>
+    </div>
+</div>
+
+<div class="registr_or_login" style="display: none;">
+    <div class="align_registr">
+        <div class="container" id="container">
+            <div class="form-container sign-up-container">
+                <form id="SignUpForm" action="/web-store/register" method="post" class="register_form">
+                    <h1>Create account</h1>
+                    <input name="username" type="text" placeholder="Name" autocomplete="off" required/>
+                    <input name="password" type="password"
+                           autocomplete="off" placeholder="Password" class="pass_input" required/>
+                    <span class="input-group-btn" onclick="showPass()">
+                            <a class="btns btn-default reveal" type="button">
+                                <div class="show_visible">
+                                    <i class="fa fa-eye-slash"></i>
+                                </div>
+                                <div class="hide_visible">
+                                    <i style="display: none" class="fa fa-eye"></i>
+                                </div>
+                            </a>
+                        </span>
+                    <br>
+                    <br>
+                    <button class="sign_up_btn" type="submit">Sing Up</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form id="SignInForm" action="/web-store/login" method="post">
+                    <h1>Sign In</h1>
+                    <br>
+                    <input name="username" type="text" placeholder="Email" class="email_input" autocomplete="off" required/>
+                    <input class="pass_input" name="password" type="password" placeholder="Password" autocomplete="off" required/>
+                    <span class="input-group-btn" onclick="showPass()">
+                            <a class="btns btn-default reveal" type="button">
+                                <div class="show_visible">
+                                    <i class="fa fa-eye-slash"></i>
+                                </div>
+                                <div class="hide_visible">
+                                    <i style="display: none" class="fa fa-eye"></i>
+                                </div>
+                            </a>
+                        </span>
+                    <br>
+                    <button class="sign_in_btn" type="submit">Sign In</button>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Hello, Friend</h1>
+                        <p> Enter your personal details and start journey with us After registration sign in</p>
+                        <button class="ghost" id="signIn">Sign In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Welcome Back!</h1>
+                        <p>To keep connected with us please enter with your personal info.</p>
+                        <button class="ghost" id="signUp">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="align-footer">
+    <div class="footer">
+        <span>WebStore © 2021</span>
+    </div>
+</div>
+<script src="js/register.js"></script>
+</body>
+</html>

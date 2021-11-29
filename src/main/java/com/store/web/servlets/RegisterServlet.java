@@ -3,26 +3,23 @@ package com.store.web.servlets;
 import com.store.entities.User;
 import com.store.security.SecurityService;
 import com.store.services.UserService;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
-    private final UserService service;
-    private final SecurityService securityService;
-
-    public RegisterServlet(UserService service, SecurityService securityService) {
-        this.service = service;
-        this.securityService = securityService;
-    }
+    private UserService service;
+    private SecurityService securityService;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.getOutputStream().write(this.getClass()
-                .getClassLoader()
-                .getResourceAsStream("templates/register.html")
-                .readAllBytes());
+    public void init() throws ServletException {
+        service = (UserService) getServletContext().getAttribute("UserService");
+        securityService = (SecurityService) getServletContext().getAttribute("SecurityService");
     }
 
     @Override
@@ -39,7 +36,7 @@ public class RegisterServlet extends HttpServlet {
         user.setUserHash(unique_identifier);
 
         service.save(user);
-        response.sendRedirect(request.getContextPath() + "/login");
+        response.sendRedirect(request.getContextPath() + "/welcome");
     }
 
 }

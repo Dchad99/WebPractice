@@ -3,27 +3,20 @@ package com.store.web.servlets;
 import com.store.entities.Product;
 import com.store.services.ProductService;
 import lombok.SneakyThrows;
+
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Date;
 
+@WebServlet("/products/add")
 public class AddProductServlet extends HttpServlet {
-    private final ProductService service;
-
-    public AddProductServlet(ProductService service) {
-        this.service = service;
-    }
+    private ProductService service;
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-            response.setContentType("text/html;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.getOutputStream().write(this.getClass()
-                    .getClassLoader()
-                    .getResourceAsStream("templates/addProduct.html")
-                    .readAllBytes());
+    public void init() {
+        service = (ProductService) getServletContext().getAttribute("ProductService");
     }
 
     @Override
@@ -34,9 +27,9 @@ public class AddProductServlet extends HttpServlet {
         product.setPrice(Integer.parseInt(request.getParameter("price")));
         product.setDate(new Date());
         product.setDescription(request.getParameter("desc"));
-
         service.save(product);
-        response.sendRedirect("/products");
+
+        response.sendRedirect(request.getContextPath() + "/products");
     }
 
 }

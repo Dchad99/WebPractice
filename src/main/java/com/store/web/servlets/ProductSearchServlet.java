@@ -4,17 +4,20 @@ import com.google.gson.Gson;
 import com.store.entities.Product;
 import com.store.services.ProductService;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.io.IOException;
 
+@WebServlet("/products/search")
 public class ProductSearchServlet extends HttpServlet {
-    private final ProductService service;
+    private ProductService service;
 
-    public ProductSearchServlet(ProductService service) {
-        this.service = service;
+    @Override
+    public void init() throws ServletException {
+        service = (ProductService) getServletContext().getAttribute("ProductService");
     }
 
     @Override

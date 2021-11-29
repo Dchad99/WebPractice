@@ -4,8 +4,6 @@ import com.store.entities.Product;
 import com.store.services.ProductService;
 import com.store.services.impl.ProductServiceImpl;
 import com.store.web.servlets.AddProductServlet;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -21,7 +19,7 @@ import static org.mockito.Mockito.when;
 
 class AddProductServletTest {
     private ProductService service = mock(ProductServiceImpl.class);
-    private ServletContextHandler servletContextHandler = mock(ServletContextHandler.class);
+    //private ServletContextHandler servletContextHandler = mock(ServletContextHandler.class);
 
     @Mock
     private HttpServletRequest request;
@@ -36,7 +34,7 @@ class AddProductServletTest {
 
     @Test
     void testAddProduct() throws IOException {
-        AddProductServlet controller = new AddProductServlet(service);
+        AddProductServlet controller = new AddProductServlet();
 
         Product product = new Product();
         product.setId(1);
@@ -50,7 +48,7 @@ class AddProductServletTest {
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
 
-        servletContextHandler.addServlet(new ServletHolder(controller), "/products/add");
+       // servletContextHandler.addServlet(new ServletHolder(controller), "/products/add");
         controller.doPost(request, response);
 
         when(response.getStatus()).thenReturn(HttpServletResponse.SC_CREATED);

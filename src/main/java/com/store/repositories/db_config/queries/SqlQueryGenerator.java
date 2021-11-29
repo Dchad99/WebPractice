@@ -34,7 +34,7 @@ public class SqlQueryGenerator implements QueryGenerator {
     public String findByParameter(Object object, Class<?> clazz) {
         return String.format(QueryTemplates.SELECT_BY_PARAMETER.get(), getTableName(clazz),
 
-        "username", "'" + object + "'");
+        "username", "'" + object + "'" );
     }
 
     @Override
@@ -65,9 +65,8 @@ public class SqlQueryGenerator implements QueryGenerator {
     }
 
     public String findByItem(Object object, String searchItem) {
-        String tableName = getTableName(object.getClass());
         searchItem = "'%" + searchItem + "%'";
-        return String.format(QueryTemplates.FIND_BY_ITEM.get(), tableName, searchItem, searchItem);
+        return String.format(QueryTemplates.FIND_BY_ITEM.get(), searchItem, searchItem);
     }
 
     private String getIdValue(Object object, String columnName) {
@@ -147,7 +146,8 @@ public class SqlQueryGenerator implements QueryGenerator {
             throw new IllegalArgumentException("Annotation @Entity should be present");
         }
         Entity clazzAnnotation = clazz.getAnnotation(Entity.class);
-        return clazzAnnotation.table().isEmpty() ? clazz.getSimpleName() : clazzAnnotation.table();
+        return clazzAnnotation.table().isEmpty() ?
+                clazz.getSimpleName() : clazzAnnotation.table();
     }
 
     @SneakyThrows

@@ -6,8 +6,6 @@ import com.store.services.UserService;
 import com.store.security.SecurityServiceImpl;
 import com.store.services.impl.UserServiceImpl;
 import com.store.web.servlets.LoginServlet;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -25,7 +23,7 @@ import static org.mockito.Mockito.when;
 class LoginServletTest {
     private final UserService service = mock(UserServiceImpl.class);
     private final SecurityService securityService = mock(SecurityServiceImpl.class);
-    private final ServletContextHandler servletContextHandler = mock(ServletContextHandler.class);
+    //private final ServletContextHandler servletContextHandler = mock(ServletContextHandler.class);
 
     @Mock
     private HttpServletRequest request;
@@ -41,7 +39,7 @@ class LoginServletTest {
     @Test
     void testLogin() throws IOException, ServletException {
         User user = new User(1, "David", "qwer1234", "qwer");
-        LoginServlet loginServlet = new LoginServlet(service, securityService);
+        LoginServlet loginServlet = new LoginServlet();
 
         when(request.getParameter("username")).thenReturn(user.getUsername());
         when(request.getParameter("password")).thenReturn(user.getPassword());
@@ -50,7 +48,7 @@ class LoginServletTest {
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
 
-        servletContextHandler.addServlet(new ServletHolder(loginServlet), "/login");
+       // servletContextHandler.addServlet(new ServletHolder(loginServlet), "/login");
         loginServlet.doPost(request, response);
 
         when(response.getStatus()).thenReturn(HttpServletResponse.SC_OK);
@@ -59,7 +57,7 @@ class LoginServletTest {
     @Test
     void testWhenUserIsNotAuthorized() throws IOException {
         User user = new User(1, "", "", "qwer");
-        LoginServlet loginServlet = new LoginServlet(service, securityService);
+        LoginServlet loginServlet = new LoginServlet();
 
         when(request.getParameter("username")).thenReturn(user.getUsername());
         when(request.getParameter("password")).thenReturn(user.getPassword());
@@ -68,7 +66,7 @@ class LoginServletTest {
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
 
-        servletContextHandler.addServlet(new ServletHolder(loginServlet), "/login");
+        //servletContextHandler.addServlet(new ServletHolder(loginServlet), "/login");
         loginServlet.doPost(request, response);
 
         when(response.getStatus()).thenReturn(HttpServletResponse.SC_UNAUTHORIZED);

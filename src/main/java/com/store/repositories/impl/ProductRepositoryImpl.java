@@ -116,9 +116,9 @@ public class ProductRepositoryImpl implements ProductRepository {
                 Product product = new Product();
                 product.setId(resultSet.getInt("id"));
                 product.setName(resultSet.getString("name"));
-                product.setPrice(resultSet.getInt("price"));
                 product.setDate(resultSet.getDate("date"));
-                product.setName(resultSet.getString("description"));
+                product.setPrice(resultSet.getInt("price"));
+                product.setDescription(resultSet.getString("description"));
                 products.add(product);
             }
             return products;

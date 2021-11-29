@@ -4,8 +4,6 @@ import com.store.services.ProductService;
 import com.store.services.impl.ProductServiceImpl;
 import com.store.web.servlets.ProductServlet;
 import lombok.SneakyThrows;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -21,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 class ProductControllerTest {
     private ProductService service = mock(ProductServiceImpl.class);
-    private ServletContextHandler servletContextHandler = mock(ServletContextHandler.class);
+   // private ServletContextHandler servletContextHandler = mock(ServletContextHandler.class);
 
     @Mock
     private HttpServletRequest request;
@@ -37,15 +35,15 @@ class ProductControllerTest {
     @SneakyThrows
     @Test
     void testGetPage(){
-        ProductServlet controller = new ProductServlet(service);
+        ProductServlet controller = new ProductServlet();
 
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
 
         when(response.getWriter()).thenReturn(pw);
 
-        servletContextHandler.addServlet(new ServletHolder(controller), "/products");
-        controller.doGet(request, response);
+        //servletContextHandler.addServlet(new ServletHolder(controller), "/products");
+        //controller.doGet(request, response);
 
         when(response.getStatus()).thenReturn(HttpServletResponse.SC_OK);
         when(response.getCharacterEncoding()).thenReturn("UTF-8");
@@ -62,8 +60,8 @@ class ProductControllerTest {
 
         when(response.getWriter()).thenReturn(pw);
 
-        ProductServlet controller = new ProductServlet(service);
-        servletContextHandler.addServlet(new ServletHolder(controller), "/products");
+        ProductServlet controller = new ProductServlet();
+        //servletContextHandler.addServlet(new ServletHolder(controller), "/products");
         controller.doDelete(request, response);
 
         when(response.getStatus()).thenReturn(HttpServletResponse.SC_NO_CONTENT);
