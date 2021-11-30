@@ -3,7 +3,9 @@ package com.store.entities;
 import com.store.repositories.db_config.queries.Column;
 import com.store.repositories.db_config.queries.Entity;
 import com.store.repositories.db_config.queries.Id;
+import lombok.Data;
 
+@Data
 @Entity(table = "orders")
 public class Order {
     @Id
@@ -11,9 +13,9 @@ public class Order {
     private int id;
 
     @Column
-    private int user_id;
+    private int clientId;
 
     @Column
-    private int product_id;
+    private int productId;
 
 }
