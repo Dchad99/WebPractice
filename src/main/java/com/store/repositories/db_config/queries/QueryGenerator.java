@@ -15,4 +15,7 @@ public interface QueryGenerator {
 
     String findByItem(Object object, String searchItem);
 
+    String findAllById(Class<?> object, int id);
+
+    String deleteByProductId(Class<?> object, int id);
 }

@@ -3,7 +3,7 @@ package com.store.web;
 import com.store.entities.Product;
 import com.store.services.ProductService;
 import com.store.services.impl.ProductServiceImpl;
-import com.store.web.servlets.AddProductServlet;
+import com.store.web.servlets.products.AddProductServlet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -48,7 +48,6 @@ class AddProductServletTest {
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
 
-       // servletContextHandler.addServlet(new ServletHolder(controller), "/products/add");
         controller.doPost(request, response);
 
         when(response.getStatus()).thenReturn(HttpServletResponse.SC_CREATED);
