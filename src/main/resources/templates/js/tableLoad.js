@@ -8,7 +8,7 @@ function renderTable(uri, data) {
 
         console.log("Search table uri => " + data);
         console.log("Table uri => " + entries);
-        if(data != null){
+        if (data != null) {
             res = data
         } else {
             res = entries;
@@ -95,18 +95,9 @@ $(document).ready(function () {
         })
     })
 
-
-    $(document).on('click', '.btn_delete', e => {
-        const id = $(e.currentTarget).closest('tr').data('product');
-        $.post("/web-store/products/delete", {id}).done(() => {
-            renderTable(tableLoad, null);
-        });
-
-    })
-
     $(document).on('click', '.addProduct', e => {
         $('.product_container').show();
-        $('.wrapper').css({"filter":"blur(8px)"});
+        $('.wrapper').css({"filter": "blur(8px)"});
 
     })
 
@@ -125,7 +116,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.close_window', e => {
         $('.product_container').hide();
-        $('.wrapper').css({"filter":"blur(0px)"});
+        $('.wrapper').css({"filter": "blur(0px)"});
     })
 
     $(".tableSearch").on('keyup', (e) => {
@@ -135,6 +126,22 @@ $(document).ready(function () {
             console.log('Data => ' + data);
             renderTable(tableSearch, data);
         })
+    })
+
+
+    $(document).on('click', '.btn_delete', e => {
+        const id = $(e.currentTarget).closest('tr').data('product');
+        $.post("/web-store/products/delete", {id}).done(() => {
+            renderTable(tableLoad, null);
+        });
+
+    })
+
+    $(document).on('click', '.btn_add_bucket', e => {
+        const id = $(e.currentTarget).closest('tr').data('product');
+        $.post("/web-store/products/cart", {id}).done(() => {
+            console.log("Product was successfully added to basket!");
+        });
     })
 
     renderTable(tableLoad, null);
