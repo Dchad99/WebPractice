@@ -4,10 +4,11 @@ import com.store.repositories.db_config.queries.Column;
 import com.store.repositories.db_config.queries.Entity;
 import com.store.repositories.db_config.queries.Id;
 import lombok.Data;
+import java.io.Serializable;
 
 @Data
 @Entity(table = "users")
-public class User {
+public class User implements Serializable {
 
     @Id
     @Column(name = "id")
