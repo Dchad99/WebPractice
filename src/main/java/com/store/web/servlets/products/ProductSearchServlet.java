@@ -1,4 +1,4 @@
-package com.store.web.servlets;
+package com.store.web.servlets.products;
 
 import com.google.gson.Gson;
 import com.store.entities.Product;
@@ -21,7 +21,7 @@ public class ProductSearchServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String search = req.getParameter("search");
 
         List<Product> productList = service.findByNameAndDescription(search);

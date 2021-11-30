@@ -1,4 +1,4 @@
-package com.store.web.servlets;
+package com.store.web.servlets.products;
 
 import com.google.gson.Gson;
 import com.store.entities.Product;

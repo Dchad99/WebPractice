@@ -2,7 +2,7 @@ package com.store.web;
 
 import com.store.services.ProductService;
 import com.store.services.impl.ProductServiceImpl;
-import com.store.web.servlets.ProductServlet;
+import com.store.web.servlets.products.ProductServlet;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,7 +62,7 @@ class ProductControllerTest {
 
         ProductServlet controller = new ProductServlet();
         //servletContextHandler.addServlet(new ServletHolder(controller), "/products");
-        controller.doDelete(request, response);
+        //controller.(request, response);
 
         when(response.getStatus()).thenReturn(HttpServletResponse.SC_NO_CONTENT);
     }

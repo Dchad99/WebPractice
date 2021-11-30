@@ -1,4 +1,4 @@
-package com.store.web.servlets;
+package com.store.web.servlets.products;
 
 import com.store.entities.Product;
 import com.store.services.ProductService;

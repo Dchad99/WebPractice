@@ -1,9 +1,8 @@
-package com.store.web.servlets;
+package com.store.web.servlets.products;
 
 import com.store.entities.Product;
 import com.store.services.ProductService;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

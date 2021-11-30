@@ -1,4 +1,4 @@
-package com.store.web.servlets;
+package com.store.web.servlets.products;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
