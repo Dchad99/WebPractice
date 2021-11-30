@@ -3,10 +3,8 @@ package com.store.repositories.db_config.queries;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,7 +32,7 @@ public class SqlQueryGenerator implements QueryGenerator {
     public String findByParameter(Object object, Class<?> clazz) {
         return String.format(QueryTemplates.SELECT_BY_PARAMETER.get(), getTableName(clazz),
 
-        "username", "'" + object + "'" );
+                "username", "'" + object + "'");
     }
 
     @Override
@@ -67,6 +65,20 @@ public class SqlQueryGenerator implements QueryGenerator {
     public String findByItem(Object object, String searchItem) {
         searchItem = "'%" + searchItem + "%'";
         return String.format(QueryTemplates.FIND_BY_ITEM.get(), searchItem, searchItem);
+    }
+
+    @Override
+    public String findAllById(Class<?> object, int id) {
+        String tableName = getTableName(object);
+        return String.format(QueryTemplates.FIND_BY_USER_ID.get(),
+                tableName, id);
+    }
+
+    public String deleteByProductId(Class<?> object, int id) {
+        String tableName = getTableName(object);
+        System.out.println("Query => " + String.format(QueryTemplates.DELETE_ORDER_BY_PRODUCT_ID.get(), tableName, id));
+        return String.format(QueryTemplates.DELETE_ORDER_BY_PRODUCT_ID.get(),
+                tableName, id);
     }
 
     private String getIdValue(Object object, String columnName) {
