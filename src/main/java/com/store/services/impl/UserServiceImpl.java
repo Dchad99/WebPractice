@@ -4,15 +4,18 @@ import com.store.entities.User;
 import com.store.exceptions.ResourceNotFoundException;
 import com.store.repositories.UserRepository;
 import com.store.services.UserService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
+@Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
-
-    public UserServiceImpl(UserRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public List<User> getAll() {
@@ -21,12 +24,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean delete(User user) {
-        return repository.delete(user);
+        Optional<User> entity = repository.getById(user.getId());
+        if(entity.isPresent()){
+            return repository.delete(entity.get());
+        }
+        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "User wasn't found");
     }
 
     @Override
     public Optional<User> getById(int id) {
-        return Optional.of(repository.getById(id)).orElseThrow(ResourceNotFoundException::new);
+        Optional<User> user = repository.getById(id);
+
+        if(user.isPresent()){
+            return user;
+        }
+
+        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "User wasn't found");
     }
 
     @Override
@@ -41,7 +54,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getByParam(String parameter) {
-        return Optional.of(repository.getByParam(parameter)).orElseThrow(ResourceNotFoundException::new);
+        Optional<User> user = repository.getByParam(parameter);
+
+        if(user.isPresent()){
+            return user;
+        }
+
+        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "User wasn't found");
     }
 
 }

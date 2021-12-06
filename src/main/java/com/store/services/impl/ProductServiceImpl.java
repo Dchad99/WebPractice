@@ -1,17 +1,21 @@
 package com.store.services.impl;
 
 import com.store.entities.Product;
+import com.store.exceptions.ResourceNotFoundException;
 import com.store.repositories.ProductRepository;
 import com.store.services.ProductService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
+@Service
+@AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository repository;
-
-    public ProductServiceImpl(ProductRepository productRepository) {
-        this.repository = productRepository;
-    }
 
     @Override
     public List<Product> getAll() {
@@ -20,12 +24,23 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean delete(Product object) {
-        return repository.delete(object);
+        Optional<Product> entity = repository.getById(object.getId());
+
+        if(entity.isPresent()){
+            return repository.delete(entity.get());
+        }
+        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "Product wasn't found");
     }
 
     @Override
     public Optional<Product> getById(int id) {
-        return Optional.of(repository.getById(id)).orElse(Optional.empty());
+        Optional<Product> product = repository.getById(id);
+
+        if(product.isPresent()){
+            return product;
+        }
+
+        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "Product wasn't found");
     }
 
     @Override
