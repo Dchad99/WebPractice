@@ -1,10 +1,8 @@
-const basketUri = "/web-store/products/cart";
+const basketUri = "/products/cart";
 const $table = $("#table");
 
 function renderTable(uri) {
     $.get(uri).done((entries) => {
-        console.log(` data => ${entries}`)
-
         let entryViews = ``;
 
         $.each(entries, (key, entry) => {
@@ -32,13 +30,18 @@ function renderTable(uri) {
 }
 
 $(document).ready(() => {
-    renderTable(basketUri);
-
     $(document).on('click', '.btn_delete', e => {
-        const id = $(e.currentTarget).closest('tr').data('product')
-        $.post('/web-store/products/cart/delete', {id}).done(() => {
+        const id = $(e.currentTarget).closest('tr').data('product');
+        $.post("/products/cart/delete", {id}).done(() => {
             renderTable(basketUri);
         })
     })
 
+    $(document).on('click', '.btn_product', e => {
+        $.get("/productPage").done(() => {
+            console.log("Product List")
+        })
+    });
+
+    renderTable(basketUri);
 })

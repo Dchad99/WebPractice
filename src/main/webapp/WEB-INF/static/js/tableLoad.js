@@ -1,9 +1,9 @@
 const $table = $("#table");
-const tableLoad = '/web-store/products';
-const tableSearch = '/web-store/products/search';
+const tableLoad = '/products';
+const tableSearch = '/products/search';
 
 function renderTable(uri, data) {
-    $.post(uri).done((entries) => {
+    $.get(uri).done((entries) => {
         let res;
 
         console.log("Search table uri => " + data);
@@ -81,7 +81,7 @@ $(document).ready(function () {
             input[name] = value
         });
 
-        $.post("/web-store/products/update", {...input, id}).done(() => {
+        $.post("/products/update", {...input, id}).done(() => {
             renderTable(tableLoad, null);
         });
 
@@ -108,7 +108,7 @@ $(document).ready(function () {
         let input = {};
         $.each(inputData, (key, {name, value}) => input[name] = value);
 
-        $.post("/web-store/products/add", {...input}).done(() => {
+        $.post("/products/add", {...input}).done(() => {
             renderTable(tableLoad, null);
         })
         $('.close_window').trigger('click');
@@ -122,7 +122,7 @@ $(document).ready(function () {
     $(".tableSearch").on('keyup', (e) => {
         const inputData = $(e.currentTarget).val();
 
-        $.post(tableSearch, {"search": inputData}).done((data) => {
+        $.get(tableSearch, {"search": inputData}).done((data) => {
             console.log('Data => ' + data);
             renderTable(tableSearch, data);
         })
@@ -131,7 +131,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.btn_delete', e => {
         const id = $(e.currentTarget).closest('tr').data('product');
-        $.post("/web-store/products/delete", {id}).done(() => {
+        $.post("/products/delete", {id}).done(() => {
             renderTable(tableLoad, null);
         });
 
@@ -139,9 +139,21 @@ $(document).ready(function () {
 
     $(document).on('click', '.btn_add_bucket', e => {
         const id = $(e.currentTarget).closest('tr').data('product');
-        $.post("/web-store/products/cart", {id}).done(() => {
+        $.post("/products/cart", {id}).done(() => {
             console.log("Product was successfully added to basket!");
         });
+    })
+
+    $(document).on('click', '.basket_btn', e => {
+        $.get("/cart").done(() => {
+            console.log("Basket")
+        })
+    })
+
+    $(document).on('click', '.logout_btn', e => {
+        $.get('/logout').done(() => {
+            console.log("User Successfully log out!")
+        })
     })
 
     renderTable(tableLoad, null);
