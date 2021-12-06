@@ -23,23 +23,23 @@ import javax.servlet.ServletContextListener;
 public class ApplicationListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        DataSources dataSources = new ConnectionFactory();
-
-        //init repository layer
-        ProductRepository repository = new ProductRepositoryImpl(dataSources);
-        UserRepository userRepository = new UserRepositoryImpl(dataSources);
-        BasketRepository basketRepository = new BasketRepositoryImpl(dataSources);
-
-        //init service layer
-        SecurityService securityService = new SecurityServiceImpl();
-        ProductService service = new ProductServiceImpl(repository);
-        UserService userService = new UserServiceImpl(userRepository);
-        BasketService basketService = new BasketServiceImpl(basketRepository);
-
-        sce.getServletContext().setAttribute("ProductService", service);
-        sce.getServletContext().setAttribute("SecurityService", securityService);
-        sce.getServletContext().setAttribute("UserService", userService);
-        sce.getServletContext().setAttribute("BasketService", basketService);
+//        DataSources dataSources = new ConnectionFactory();
+//
+//        //init repository layer
+//        ProductRepository repository = new ProductRepositoryImpl(dataSources);
+//        UserRepository userRepository = new UserRepositoryImpl(dataSources);
+//        BasketRepository basketRepository = new BasketRepositoryImpl(dataSources);
+//
+//        //init service layer
+//        SecurityService securityService = new SecurityServiceImpl();
+//        ProductService service = new ProductServiceImpl(repository);
+//        UserService userService = new UserServiceImpl(userRepository);
+//        BasketService basketService = new BasketServiceImpl(basketRepository);
+//
+//        sce.getServletContext().setAttribute("ProductService", service);
+//        sce.getServletContext().setAttribute("SecurityService", securityService);
+//        sce.getServletContext().setAttribute("UserService", userService);
+//        sce.getServletContext().setAttribute("BasketService", basketService);
     }
 
 }
