@@ -2,6 +2,7 @@ package com.store.repositories.db_config.queries;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
@@ -15,6 +16,7 @@ import static java.lang.String.join;
 import static java.lang.String.valueOf;
 
 @Slf4j
+@Component
 public class SqlQueryGenerator implements QueryGenerator {
 
     @Override
