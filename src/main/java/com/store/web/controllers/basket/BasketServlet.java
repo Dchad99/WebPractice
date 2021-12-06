@@ -1,4 +1,4 @@
-package com.store.web.servlets.basket;
+package com.store.web.controllers.basket;
 
 import com.google.gson.Gson;
 import com.store.entities.Order;
@@ -6,10 +6,10 @@ import com.store.entities.Product;
 import com.store.entities.User;
 import com.store.services.BasketService;
 import com.store.services.ProductService;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,19 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@WebServlet("/products/cart")
-public class BasketServlet extends HttpServlet {
-    private BasketService basketService;
-    private ProductService productService;
+@Controller
+@AllArgsConstructor
+public class BasketServlet {
+    private final BasketService basketService;
+    private final ProductService productService;
 
-    @Override
-    public void init() throws ServletException {
-        basketService = (BasketService) getServletContext().getAttribute("BasketService");
-        productService = (ProductService) getServletContext().getAttribute("ProductService");
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    @GetMapping("/products/cart")
+    public void displayProductFromBasket(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
 
@@ -51,9 +46,8 @@ public class BasketServlet extends HttpServlet {
         }
     }
 
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @PostMapping("/products/cart")
+    public void addProductToBasket(HttpServletRequest req, HttpServletResponse resp) {
         int productId = Integer.parseInt(req.getParameter("id"));
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
@@ -67,4 +61,16 @@ public class BasketServlet extends HttpServlet {
             basketService.save(order);
         }
     }
+
+    @PostMapping("/products/cart/delete")
+    public void deleteFromBasket(HttpServletRequest request, HttpServletResponse response){
+        basketService.deleteByProductId(Integer.parseInt(request.getParameter("id")));
+        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+    }
+
+    @GetMapping("/cart")
+    public String displayBasketPage() {
+        return "static/html/basketTable.html";
+    }
+
 }
