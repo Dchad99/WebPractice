@@ -22,9 +22,7 @@ insert into products(name, price, date, description) values ('MeatGoat', 4310 , 
 insert into products(name, price, date, description) values ('MeatCow', 4310 , '2022-08-02', 'Cow');
 
 
-drop table orders;
-CREATE TABLE orders
-(
+CREATE TABLE orders(
     id         serial PRIMARY KEY,
     clientId    INTEGER NOT NULL,
     productId INTEGER NOT NULL,
