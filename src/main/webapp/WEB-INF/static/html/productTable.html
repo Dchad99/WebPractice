@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/product.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -21,8 +21,8 @@
                 <div class="align_icons_container">
                     <div class="icons_container">
                         <a href="#" class="addProduct"><i class="fa fa-plus-square"></i></a>
-                        <a href="/web-store/cart"><i class="fa fa-bitbucket"></i></a>
-                        <a href="/web-store/logout"><i class="fa fa-window-close"></i></a>
+                        <a href="/cart" class="basket_btn"><i class="fa fa-bitbucket"></i></a>
+                        <a href="/logout" class="logout_btn"><i class="fa fa-window-close"></i></a>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
             <a href="#" class="close_window"><i class="fa fa-times"></i></a>
         </div>
         <div class="align_form">
-            <form class="addProductForm" action="/web-store/products/add" method="post">
+            <form class="addProductForm" action="/products/add" method="post">
                 <input type="text" name="name" placeholder="Enter product" autocomplete="false" required/>
                 <input type="number" name="price" placeholder="Enter product price" autocomplete="false" required/>
                 <input type="text" name="desc" placeholder="Enter product description" autocomplete="false" required/>
@@ -82,6 +82,6 @@
     </div>
 </div>
 
-<script src="js/tableLoad.js"></script>
+<script src="static/js/tableLoad.js"></script>
 </body>
 </html>

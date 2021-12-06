@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebStore</title>
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" href="css/register.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/register.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -26,7 +26,7 @@
 <div class="align-of-main-container">
     <div class="main-content">
         <div class="man-with-tablet">
-            <img src="img/right-man.png"/>
+            <img src="static/img/right-man.png" alt=""/>
         </div>
         <div class="teoco-start-btn">
             <p>welcome, friend</p>
@@ -34,7 +34,7 @@
             <button onclick="Start()">Start</button>
         </div>
         <div class="list-of-task">
-            <img src="img/list_of_orders.png"/>
+            <img src="static/img/list_of_orders.png" alt=""/>
         </div>
     </div>
 </div>
@@ -43,7 +43,7 @@
     <div class="align_registr">
         <div class="container" id="container">
             <div class="form-container sign-up-container">
-                <form id="SignUpForm" action="/web-store/register" method="post" class="register_form">
+                <form id="SignUpForm" action="/register" method="post" class="register_form">
                     <h1>Create account</h1>
                     <input name="username" type="text" placeholder="Name" autocomplete="off" required/>
                     <input name="password" type="password"
@@ -64,7 +64,7 @@
                 </form>
             </div>
             <div class="form-container sign-in-container">
-                <form id="SignInForm" action="/web-store/login" method="post">
+                <form id="SignInForm" action="/login" method="post">
                     <h1>Sign In</h1>
                     <br>
                     <input name="username" type="text" placeholder="Email" class="email_input" autocomplete="off" required/>
@@ -107,6 +107,6 @@
         <span>WebStore © 2021</span>
     </div>
 </div>
-<script src="js/register.js"></script>
+<script src="static/js/register.js"></script>
 </body>
 </html>
