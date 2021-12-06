@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-@WebFilter("/products")
+@WebFilter("/products/*")
 public class AuthSecurityFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
