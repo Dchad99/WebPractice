@@ -4,8 +4,9 @@ import com.store.entities.Order;
 import com.store.repositories.BasketRepository;
 import com.store.repositories.db_config.database.DataSources;
 import com.store.repositories.db_config.queries.QueryGenerator;
-import com.store.repositories.db_config.queries.SqlQueryGenerator;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Repository;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,14 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
+@Repository
+@AllArgsConstructor
 public class BasketRepositoryImpl implements BasketRepository {
     private final DataSources connectionFactory;
     private final QueryGenerator queryGenerator;
-
-    public BasketRepositoryImpl(DataSources connectionFactory) {
-        this.connectionFactory = connectionFactory;
-        queryGenerator = new SqlQueryGenerator();
-    }
 
     @Override
     public List<Order> getAllOrdersByUserId(int id) {
