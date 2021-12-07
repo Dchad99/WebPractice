@@ -5,8 +5,9 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <!--    performs the actual initialization work for the ROOT application context.-->
     <listener>
-        <listener-class>com.store.listeners.ApplicationListener</listener-class>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
     <servlet>
