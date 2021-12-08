@@ -1,12 +1,21 @@
 package com.store.exceptions;
 
-import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 public class RequestException extends RuntimeException{
     private String message;
+    private HttpStatus status;
 
-    @Override
+    public RequestException(String message) {
+        super();
+        this.message = message;
+    }
+
+    public RequestException(String message, HttpStatus status) {
+        this.message = message;
+        this.status = status;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -20,18 +29,6 @@ public class RequestException extends RuntimeException{
     }
 
     public void setStatus(HttpStatus status) {
-        this.status = status;
-    }
-
-    private HttpStatus status;
-
-    public RequestException(String message) {
-        super();
-        this.message = message;
-    }
-
-    public RequestException(String message, HttpStatus status) {
-        this.message = message;
         this.status = status;
     }
 }
