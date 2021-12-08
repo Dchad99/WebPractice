@@ -17,8 +17,8 @@ function renderTable(uri) {
                             <td class="action" data-product="${id}">
                                 <div class="container_align">
                                     <div class="action_container">
-                                        <button class="btn_update a"><i class="fa fa-check"></i></button>
-                                        <button class="btn_delete a"><i class="fa fa-trash"></i></i></button>
+                                        <button class="btn_update_b a"><i class="fa fa-check"></i></button>
+                                        <button class="btn_delete_b a"><i class="fa fa-trash"></i></i></button>
                                     </div>
                                 </div>
                             </td>
@@ -30,9 +30,9 @@ function renderTable(uri) {
 }
 
 $(document).ready(() => {
-    $(document).on('click', '.btn_delete', e => {
+    $(document).on('click', '.btn_delete_b', e => {
         const id = $(e.currentTarget).closest('tr').data('product');
-        $.post("/products/cart/delete", {id}).done(() => {
+        $.post(`/products/cart/delete/${id}`).done(() => {
             renderTable(basketUri);
         })
     })

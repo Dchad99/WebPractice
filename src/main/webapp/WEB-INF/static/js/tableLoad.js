@@ -6,8 +6,6 @@ function renderTable(uri, data) {
     $.get(uri).done((entries) => {
         let res;
 
-        console.log("Search table uri => " + data);
-        console.log("Table uri => " + entries);
         if (data != null) {
             res = data
         } else {
@@ -98,7 +96,6 @@ $(document).ready(function () {
     $(document).on('click', '.addProduct', e => {
         $('.product_container').show();
         $('.wrapper').css({"filter": "blur(8px)"});
-
     })
 
     $("#addProductForm").submit(e => {
@@ -108,10 +105,23 @@ $(document).ready(function () {
         let input = {};
         $.each(inputData, (key, {name, value}) => input[name] = value);
 
-        $.post("/products/add", {...input}).done(() => {
-            renderTable(tableLoad, null);
-        })
-        $('.close_window').trigger('click');
+        // $.post("/products/add", {...input}).done(() => {
+        //     renderTable(tableLoad, null);
+        // })
+
+
+        $.ajax({
+            type: "POST",
+            processData: false,
+            contentType: false,
+            crossDomain: true,
+            dataType: 'json',
+            data: input,
+            url: "/products/add",
+            success: function() {
+                renderTable(tableLoad, null)
+            }
+        });
     })
 
     $(document).on('click', '.close_window', e => {
@@ -120,10 +130,10 @@ $(document).ready(function () {
     })
 
     $(".tableSearch").on('keyup', (e) => {
-        const inputData = $(e.currentTarget).val();
+        const search = $(e.currentTarget).val();
+        console.log(`Val = > ${search}`);
 
-        $.get(tableSearch, {"search": inputData}).done((data) => {
-            console.log('Data => ' + data);
+        $.get(tableSearch, {"search": search}).done((data) => {
             renderTable(tableSearch, data);
         })
     })
@@ -131,10 +141,10 @@ $(document).ready(function () {
 
     $(document).on('click', '.btn_delete', e => {
         const id = $(e.currentTarget).closest('tr').data('product');
-        $.post("/products/delete", {id}).done(() => {
+        console.log(id);
+        $.post(`/products/delete/${id}`).done(() => {
             renderTable(tableLoad, null);
         });
-
     })
 
     $(document).on('click', '.btn_add_bucket', e => {
