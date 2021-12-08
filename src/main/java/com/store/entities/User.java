@@ -30,6 +30,12 @@ public class User implements Serializable {
         this.userHash = userHash;
     }
 
+    public User(String username, String password, String userHash){
+        this.username = username;
+        this.password = password;
+        this.userHash = userHash;
+    }
+
     public User() {
     }
 }
