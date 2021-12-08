@@ -16,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 @Configuration
 @Slf4j
 public class AspectConfig {
-
     @Before(value = "execution(* com.store.web.controllers.*.*(..))")
     public void logStatementBefore(JoinPoint joinPoint) {
         log.info("Execute => {}", joinPoint);
@@ -27,7 +26,7 @@ public class AspectConfig {
         log.info("Complete execution => {}", joinPoint);
     }
 
-    @Around(value = "execution(* com.store.services.impl.*.*(..))")
+    @Around(value = "execution(* com.store.services.*.*(..))")
     public Object requestHandler(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
             return joinPoint.proceed();
@@ -35,11 +34,10 @@ public class AspectConfig {
             log.info("RequestException StatusCode {}", e.getStatus().value());
             log.info("RequestException Message {}", e.getMessage());
             throw new ResponseStatusException(e.getStatus(), e.getMessage());
-        } catch (ResourceNotFoundException e){
+        } catch (ResourceNotFoundException e) {
             log.info("ResourceNotFoundException StatusCode {}", e.getStatus().value());
             log.info("ResourceNotFoundException Message {}", e.getMessage());
             throw new ResponseStatusException(e.getStatus(), e.getMessage());
         }
     }
-
 }
