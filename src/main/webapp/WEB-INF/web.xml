@@ -6,13 +6,26 @@
          version="4.0">
 
     <!--    performs the actual initialization work for the ROOT application context.-->
+    <!--    Creates Spring Container shared by all Controllers and Filters
+        This listener combine our WEB-container & Spring-container
+    -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <!--    Definition of ROOT Spring Container shared by all Controllers and Filters-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:/root-context.xml</param-value>
+    </context-param>
 
+    <!--    app-servlet.xml it is a context for DispatcherServlet - GENERAL INFO OF APPLICATION-->
     <servlet>
         <servlet-name>app</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/app-servlet.xml</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
@@ -20,6 +33,4 @@
         <servlet-name>app</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
-
-
 </web-app>
