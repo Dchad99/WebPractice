@@ -1,5 +1,5 @@
 package com.store.web.controllers;
-import com.store.dto.ProductDTO;
+import com.store.web.dto.ProductDTO;
 import com.store.entities.Product;
 import com.store.exceptions.RequestException;
 import com.store.services.ProductService;
@@ -7,13 +7,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
+@Validated
 @AllArgsConstructor
 public class ProductController {
     private final ProductService service;
@@ -30,8 +33,8 @@ public class ProductController {
 
 
     @PostMapping("/products/update")
-    public ResponseEntity<?> updateProduct(@ModelAttribute ProductDTO productDTO) {
-        Optional<Product> productToUpdate = service.getById(productDTO.getId());
+    public ResponseEntity<?> updateProduct(@Valid @ModelAttribute ProductDTO productDTO, @RequestParam Integer id) {
+        Optional<Product> productToUpdate = service.getById(id);
 
         if (productToUpdate.isPresent()) {
             Product p = productToUpdate.get();
@@ -71,7 +74,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "/products/add")
-    public String createProduct(@ModelAttribute ProductDTO productDTO) {
+    public String createProduct(@Valid @ModelAttribute ProductDTO productDTO) {
         Product product = new Product(productDTO.getName(),  productDTO.getDesc(), productDTO.getPrice());
 
         product.setDate(new Date());

@@ -34,7 +34,7 @@ public class BasketController {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
 
-        if(user != null) {
+        if (user != null) {
             List<Product> orderedProduct = new ArrayList<>();
             List<Order> productList = basketService.getAllOrdersByUserId(user.getId());
 
@@ -56,7 +56,7 @@ public class BasketController {
         User user = (User) session.getAttribute("user");
 
         Optional<Product> product = productService.getById(id);
-        if(product.isPresent()){
+        if (product.isPresent()) {
             Product data = product.get();
             Order order = new Order();
             order.setProductId(data.getId());
@@ -66,7 +66,7 @@ public class BasketController {
     }
 
     @PostMapping("/products/cart/delete/{id}")
-    public ResponseEntity<?> deleteFromBasket(@PathVariable Integer id){
+    public ResponseEntity<?> deleteFromBasket(@PathVariable Integer id) {
         return new ResponseEntity<>(basketService.deleteByProductId(id), HttpStatus.NO_CONTENT);
     }
 
