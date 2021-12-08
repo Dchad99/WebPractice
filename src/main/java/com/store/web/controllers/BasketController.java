@@ -1,4 +1,4 @@
-package com.store.web.controllers.basket;
+package com.store.web.controllers;
 
 import com.google.gson.Gson;
 import com.store.entities.Order;
@@ -7,9 +7,14 @@ import com.store.entities.User;
 import com.store.services.BasketService;
 import com.store.services.ProductService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +25,7 @@ import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
-public class BasketServlet {
+public class BasketController {
     private final BasketService basketService;
     private final ProductService productService;
 
@@ -47,12 +52,10 @@ public class BasketServlet {
     }
 
     @PostMapping("/products/cart")
-    public void addProductToBasket(HttpServletRequest req, HttpServletResponse resp) {
-        int productId = Integer.parseInt(req.getParameter("id"));
-        HttpSession session = req.getSession();
+    public void addProductToBasket(@RequestParam Integer id, HttpSession session) {
         User user = (User) session.getAttribute("user");
 
-        Optional<Product> product = productService.getById(productId);
+        Optional<Product> product = productService.getById(id);
         if(product.isPresent()){
             Product data = product.get();
             Order order = new Order();
@@ -62,10 +65,9 @@ public class BasketServlet {
         }
     }
 
-    @PostMapping("/products/cart/delete")
-    public void deleteFromBasket(HttpServletRequest request, HttpServletResponse response){
-        basketService.deleteByProductId(Integer.parseInt(request.getParameter("id")));
-        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+    @PostMapping("/products/cart/delete/{id}")
+    public ResponseEntity<?> deleteFromBasket(@PathVariable Integer id){
+        return new ResponseEntity<>(basketService.deleteByProductId(id), HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/cart")
