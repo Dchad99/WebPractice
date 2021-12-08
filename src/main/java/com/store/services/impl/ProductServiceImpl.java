@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,18 +28,18 @@ public class ProductServiceImpl implements ProductService {
         if(entity.isPresent()){
             return repository.delete(entity.get());
         }
-        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "Product wasn't found");
+        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "Product wasn't found with id:" + object.getId());
     }
 
     @Override
     public Optional<Product> getById(int id) {
         Optional<Product> product = repository.getById(id);
 
-        if(product.isPresent()){
+        if (product.isPresent()) {
             return product;
         }
 
-        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "Product wasn't found");
+        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "Product wasn't found with id: " + id);
     }
 
     @Override

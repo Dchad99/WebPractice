@@ -28,11 +28,11 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public boolean delete(Order order) {
         Optional<Order> entity = repository.getById(order.getId());
-        if(entity.isPresent()){
+        if (entity.isPresent()) {
             return repository.delete(order);
         }
 
-        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "Order wasn't found");
+        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "Order wasn't found, where productId: " + order.getProductId());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class BasketServiceImpl implements BasketService {
         if (order.isPresent()) {
             return order;
         }
-        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "Order wasn't found");
+        throw new ResourceNotFoundException(HttpStatus.NOT_FOUND, "Order wasn't found, where productId: " + id);
     }
 
     @Override
