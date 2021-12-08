@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class StarterServlet {
+public class StarterController {
 
     @GetMapping("/welcome")
     public String renderWelcomePage() {

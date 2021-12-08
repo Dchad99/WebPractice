@@ -1,11 +1,13 @@
 package com.store.web.controllers;
 
+import com.store.dto.Credential;
 import com.store.entities.User;
 import com.store.security.SecurityService;
 import com.store.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.Cookie;
@@ -23,56 +25,43 @@ public class UserController {
     private final SecurityService securityService;
 
     @PostMapping("/register")
-    public void registerUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
+    public String registerUser(@ModelAttribute Credential credential) {
         final String unique_identifier = securityService.getRandomUUID();
-        final String encoded_password = securityService.encryptData(password + unique_identifier);
+        final String encoded_password = securityService.encryptData(credential.getPassword() + unique_identifier);
 
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(encoded_password);
-        user.setUserHash(unique_identifier);
-
+        User user = new User(credential.getUsername(), encoded_password, unique_identifier);
         service.save(user);
-        response.sendRedirect(request.getContextPath() + "/welcome");
+
+        return "redirect:/welcome";
     }
 
-
     @PostMapping("/login")
-    public void loginUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        HttpSession session = request.getSession();
-        Optional<User> user = service.getByParam(username);
+    public String loginUser(@ModelAttribute Credential credential, HttpSession session, HttpServletResponse response) {
+        Optional<User> user = service.getByParam(credential.getUsername());
 
         if (user.isPresent()) {
             User fromDb = user.get();
-            final String encoded_password = securityService.encryptData(password + fromDb.getUserHash());
+            final String encoded_password = securityService.encryptData(credential.getPassword() + fromDb.getUserHash());
             if (Objects.equals(encoded_password, fromDb.getPassword())) {
                 Cookie cookie = new Cookie("user-token", fromDb.getUserHash());
                 cookie.setMaxAge(15000);
-
                 session.setAttribute("user", fromDb);
-
                 response.addCookie(cookie);
-                response.sendRedirect("/productPage");
+
+                return "redirect:/productPage";
             }
-        } else {
-            response.sendRedirect("/welcome");
         }
+        return "redirect:/welcome";
     }
 
 
     @GetMapping("/logout")
-    public void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public String logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
         Cookie readCookie = null;
         Cookie[] cookies = req.getCookies();
         for (Cookie cookie : cookies) {
-            if(cookie.getName().equalsIgnoreCase("user-token")){
+            if (cookie.getName().equalsIgnoreCase("user-token")) {
                 cookie.setValue("");
                 cookie.setMaxAge(0);
                 readCookie = cookie;
@@ -80,7 +69,8 @@ public class UserController {
         }
         session.invalidate();
         resp.addCookie(readCookie);
-        resp.sendRedirect(req.getContextPath() + "/welcome");
+
+        return "redirect:/welcome";
     }
 
 }
